@@ -1,0 +1,40 @@
+<?xml version='1.0'?>
+<sdf version="1.4">
+<model name="DREAM_setup">
+  <pose>0 0 0.75 0 0 0</pose>
+  <static>true</static>
+    <link name="table">
+      <collision name="collision">
+        <geometry>
+            <mesh>
+                <uri>model://DREAM_setup/meshes/setup2.dae</uri>
+            </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <!--<cylinder>
+            <radius>0.055000</radius>
+            <length>0.230000</length>
+          </cylinder>
+            -->
+            <mesh>
+                <uri>model://DREAM_setup/meshes/setup2.dae</uri>
+            </mesh>
+        </geometry>
+<!---2->
+        <material>
+          <script>
+            <uri>model://DREAM_setup/materials/scripts</uri>
+            <uri>model://DREAM_setup/materials/textures</uri>
+            <name>table_material</name>
+<!-2-2-2->
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Red</name>
+          </script>
+        </material>
+<!-2--->
+      </visual>
+    </link>
+  </model>
+</sdf>

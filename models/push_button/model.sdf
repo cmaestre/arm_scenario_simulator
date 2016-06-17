@@ -1,0 +1,80 @@
+<?xml version='1.0'?>
+<sdf version="1.4">
+<model name="push_button">
+
+    <link name="base">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.008</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.008</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.083</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+            <mesh>
+                <uri>model://push_button/meshes/base.dae</uri>
+            </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+            <mesh>
+                <uri>model://push_button/meshes/base.dae</uri>
+            </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="button">
+      <pose>0 0 0.005 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.008</ixx>    
+          <ixy>0.0</ixy>       
+          <ixz>0.0</ixz>    
+          <iyy>0.008</iyy>    
+          <iyz>0.0</iyz>
+          <izz>0.083</izz>
+        </inertia>
+      </inertial>
+      <collision name="collision">
+        <geometry>
+            <mesh>
+                <uri>model://push_button/meshes/button.dae</uri>
+            </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+            <mesh>
+                <uri>model://push_button/meshes/button.dae</uri>
+            </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name="glider" type="prismatic">
+        <pose>0 0 0 0 0 0</pose>
+        <child>button</child>
+        <parent>base</parent>
+        <axis>
+            <xyz>0 0 1</xyz>
+            <limit>
+                <lower>0</lower>
+                <upper>0.01</upper>
+            </limit>
+        </axis>
+    </joint>
+
+    <plugin name="push_button" filename="/home/masson/gazebo/models/push_button/plugins/build/libpush_button.so"/>
+    <plugin name="sensor" filename="/home/masson/gazebo/models/push_button/plugins/build/libsensor.so"/>
+
+  </model>
+</sdf>
