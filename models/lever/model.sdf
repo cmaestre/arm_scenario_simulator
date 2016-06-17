@@ -75,7 +75,7 @@
         </axis>
     </joint>
 
-    <plugin name="sensor" filename="/home/masson/gazebo/models/lever/plugins/build/libsensor.so"/>
+    <plugin name="sensor" filename="liblever_sensor.so"/>
 
   </model>
 </sdf>

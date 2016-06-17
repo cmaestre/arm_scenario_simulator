@@ -11,5 +11,5 @@ endif()
 include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
-add_library(sensor SHARED sensor.cc)
-target_link_libraries(sensor ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})
+add_library(lever_sensor SHARED lever_sensor.cc)
+target_link_libraries(lever_sensor ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})

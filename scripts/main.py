@@ -9,6 +9,7 @@ import math
 
 import rospy
 import rospkg
+rospack = rospkg.RosPack()
 
 from gazebo_msgs.srv import (
     SpawnModel,
@@ -31,7 +32,7 @@ def axis_to_quat(axis, angle):
     sin = math.sin(angle/2)
     return Quaternion(w=math.cos(angle/2), x=sin*axis[0], y=sin*axis[1], z=sin*axis[2])
 
-gazebo_models_path = os.getenv('HOME')+'/.gazebo/models'
+gazebo_models_path = rospack.get_path('arm_scenario_simulator')+'/models'
 
 objects_to_load = []
 objects_to_load.append({'name' : 'table',

@@ -11,8 +11,8 @@ endif()
 include_directories(${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
-add_library(push_button SHARED push_button.cc)
-target_link_libraries(push_button ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})
+add_library(button_spring SHARED button_spring.cc)
+target_link_libraries(button_spring ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})
 
-add_library(sensor SHARED sensor.cc)
-target_link_libraries(sensor ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})
+add_library(button_sensor SHARED button_sensor.cc)
+target_link_libraries(button_sensor ${GAZEBO_LIBRARIES} ${Boost_LIBRARIES})

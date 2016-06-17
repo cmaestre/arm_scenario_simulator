@@ -73,8 +73,8 @@
         </axis>
     </joint>
 
-    <plugin name="push_button" filename="/home/masson/gazebo/models/push_button/plugins/build/libpush_button.so"/>
-    <plugin name="sensor" filename="/home/masson/gazebo/models/push_button/plugins/build/libsensor.so"/>
+    <plugin name="push_button" filename="libbutton_spring.so"/>
+    <plugin name="sensor" filename="libbutton_sensor.so"/>
 
   </model>
 </sdf>

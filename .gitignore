@@ -1,0 +1,8 @@
+.*
+**/*~
+
+models/*/plugins/build/CMakeCache.txt
+models/*/plugins/build/CMakeFiles/*
+models/*/plugins/build/Makefile
+models/*/plugins/build/cmake_install.cmake
+lib/*
