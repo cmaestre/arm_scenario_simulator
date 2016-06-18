@@ -9,7 +9,7 @@
 ##To run :
 1. Start by executing ```./baxter.sh sim``` while in the catkin_ws to be able to use Baxter
 2. Move to the arm_scenario_simulator package (```roscd arm_scenario_simulator```) and source setup.sh : ```source setup.sh```
-3. The scenario's environment can then be spawned executing ```roslaunch arm_scenario_simulator baxter_world.launch```
+3. The scenario's environment can then be laucnhed by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` and then some objects can be spwaned on the table by executing ```rosrun arm_scenario_simulator spawn objects.py``` resulting in something like this :
 
 ![aperçu.png](https://bitbucket.org/repo/GLdKKe/images/3521778972-aper%C3%A7u.png)
 
