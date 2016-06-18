@@ -10,3 +10,16 @@
 1. Start by executing ```./baxter.sh sim``` while in the catkin_ws to be able to use Baxter
 2. Move to the arm_scenario_simulator package (```roscd arm_scenario_simulator```) and source setup.sh : ```source setup.sh```
 3. The scenario's environment can then be spawned executing ```roslaunch arm_scenario_simulator baxter_world.launch```
+
+
+##Already present : 
+* A table with a pocket
+* Models for interactive objects (buttons, levers) with sensors (a plugin publishing the state on a GAZEBO topic)
+* Models for basic objects (cube and cylinder)
+* provided by rethinkRobotics : simple ROS interface to control Baxter
+
+##To Do :
+* add a sensor to the table's pocket
+* add textures to objects
+* interfacing gazebo's sensor topic with ROS topics such that the state of buttons and lever is available in ROS
+* testing simulation speed increase possibilities
