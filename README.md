@@ -11,12 +11,13 @@
 2. Move to the arm_scenario_simulator package (```roscd arm_scenario_simulator```) and source setup.sh : ```source setup.sh```
 3. The scenario's environment can then be spawned executing ```roslaunch arm_scenario_simulator baxter_world.launch```
 
+![aperçu.png](https://bitbucket.org/repo/GLdKKe/images/3521778972-aper%C3%A7u.png)
 
 ##Already present : 
 * A table with a pocket
 * Models for interactive objects (buttons, levers) with sensors (a plugin publishing the state on a GAZEBO topic)
 * Models for basic objects (cube and cylinder)
-* provided by rethinkRobotics : simple ROS interface to control Baxter
+* provided by rethinkRobotics : simple ROS interface to control Baxter (in python)
 
 ##To Do :
 * add a sensor to the table's pocket
