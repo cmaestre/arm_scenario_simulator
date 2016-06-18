@@ -7,8 +7,8 @@ env_vars = ['GAZEBO_MODEL_PATH', 'GAZEBO_RESOURCE_PATH', 'GAZEBO_PLUGIN_PATH']
 def process(line):
     line = ' '.join(line.split())
     for var in env_vars:
-        print(line.find('export '+var))
-        print(line.count(var))
+        #print(line.find('export '+var))
+        #print(line.count(var))
         if line.find('export '+var)>-1 and line.count(var)==1:
             return line+':$'+var+'\n'
     return line+'\n'
@@ -18,9 +18,9 @@ def main(path):
     with open(temp_name, 'w') as new:
         with open(path, 'r') as original:
             for line in original:
-                print(line)
+                #print(line)
                 new_line = process(line)
-                print new_line+'\n'
+                #print new_line+'\n'
                 new.write(new_line)
 
     save_copy = path+'.orig'

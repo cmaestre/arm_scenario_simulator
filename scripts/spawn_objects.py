@@ -35,10 +35,6 @@ def axis_to_quat(axis, angle):
 gazebo_models_path = rospack.get_path('arm_scenario_simulator')+'/models'
 
 objects_to_load = []
-objects_to_load.append({'name' : 'table',
-                        'path' : gazebo_models_path+'/DREAM_setup/model.sdf',
-                        'pose' : Pose(position=Point(x=0.6, y=0.0, z=0.0), orientation=axis_to_quat([0,0,1], -math.pi/2 )) })
-
 objects_to_load.append({'name' : 'button1',
                         'path' : gazebo_models_path+'/push_button/model.sdf',
                         'pose' : Pose(position=Point(x=0.6, y=-0.1, z=0.76)) })

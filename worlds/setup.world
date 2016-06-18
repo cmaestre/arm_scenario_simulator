@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">    
+    <physics type="ode">
+      <real_time_update_rate>1000.0</real_time_update_rate>
+      <gravity>0.0 0.0 -9.81</gravity>
+    </physics>
+    
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://cafe</uri>
+      <pose>0 0 0  0 0 0</pose>
+      <static>true</static>
+    </include>
+
+    <include>
+      <uri>model://DREAM_setup</uri>
+      <pose>0.6 0 0.75  0 0 -1.570796</pose>
+      <static>true</static>
+    </include>
+  </world>
+</sdf>

@@ -9,11 +9,9 @@ ln -f $package_path/models/*/plugins/build/*.so $package_path/lib/
 echo "Found plugin libraries :"
 ls $package_path"/lib"
 
-# Edit gazebo's setup so that the following env variable changes are not reset at Gazebo's launch
-gazebo_setup_path=$(pkg-config --variable=prefix gazebo)/share/gazebo/setup.sh
-python fix_gazebo_setup $gazebo_setup_path
-
 # Set GAZEBO env variables and 
 export GAZEBO_MODEL_PATH=$package_path/models:$GAZEBO_MODEL_PATH
 export GAZEBO_PLUGIN_PATH=$package_path/lib:$GAZEBO_PLUGIN_PATH
 
+echo "GAZEBO_MODEL_PATH = "$GAZEBO_MODEL_PATH
+echo "GAZEBO_PLUGIN_PATH = "$GAZEBO_PLUGIN_PATH
