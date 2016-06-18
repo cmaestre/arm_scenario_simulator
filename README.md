@@ -1,5 +1,5 @@
 ##To install :
-0. First make sur you have installed:
+0. First make sure you have installed:
     1. ROS indigo (full desktop install, http://wiki.ros.org/indigo/Installation/Ubuntu)
     2. Baxter Simulator (http://sdk.rethinkrobotics.com/wiki/Simulator_Installation)
 1. clone this repostiory into your catkin workspace "src" folder
