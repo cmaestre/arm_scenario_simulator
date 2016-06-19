@@ -22,5 +22,6 @@
 ##To Do :
 * add a sensor to the table's pocket
 * add textures to objects
+* add a camera on top of Baxter's head
 * interfacing gazebo's sensor topic with ROS topics such that the state of buttons and lever is available in ROS
 * testing simulation speed increase possibilities
