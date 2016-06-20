@@ -36,19 +36,19 @@ gazebo_models_path = rospack.get_path('arm_scenario_simulator')+'/models'
 
 objects_to_load = []
 objects_to_load.append({'name' : 'button1',
-                        'path' : gazebo_models_path+'/push_button/model.sdf',
+                        'path' : gazebo_models_path+'/DREAM_push_button/model.sdf',
                         'pose' : Pose(position=Point(x=0.6, y=-0.1, z=0.76)) })
 
 objects_to_load.append({'name' : 'lever1',
-                        'path' : gazebo_models_path+'/lever/model.sdf',
+                        'path' : gazebo_models_path+'/DREAM_lever/model.sdf',
                         'pose' : Pose(position=Point(x=0.8, y=0.5, z=0.76), orientation=axis_to_quat([0,0,1], -math.pi/2 )) })
 
 objects_to_load.append({'name' : 'cube1',
-                        'path' : gazebo_models_path+'/cube/model.sdf',
+                        'path' : gazebo_models_path+'/DREAM_cube/model.sdf',
                         'pose' : Pose(position=Point(x=0.7, y=0.3, z=0.76)) })
 
 objects_to_load.append({'name' : 'cylinder1',
-                        'path' : gazebo_models_path+'/cylinder/model.sdf',
+                        'path' : gazebo_models_path+'/DREAM_cylinder/model.sdf',
                         'pose' : Pose(position=Point(x=0.6, y=0.2, z=0.76)) })
 sucessfully_loaded = []
 
