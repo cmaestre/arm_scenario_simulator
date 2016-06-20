@@ -3,7 +3,7 @@
     1. ROS indigo (full desktop install, http://wiki.ros.org/indigo/Installation/Ubuntu)
     2. Baxter Simulator (http://sdk.rethinkrobotics.com/wiki/Simulator_Installation)
 1. clone this repostiory into your catkin workspace "src" folder
-2. execute ```sudo ./fix_gazebo_setup.sh``` (this tiny script edits two lines in a gazebo configuration file)
+2. If your gazebo version is under 2.2.5 (cf Help/about in Gazebo) then execute ```sudo ./fix_gazebo_setup.sh``` (this tiny script edits two lines in a gazebo configuration file)
 
 
 ##To run :
