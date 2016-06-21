@@ -23,7 +23,6 @@
     <include>
       <uri>model://DREAM_table</uri>
       <pose>0.6 0 0  0 0 -1.570796</pose>
-  <!--<static>true</static>-->
     </include>
 
   </world>
