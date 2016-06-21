@@ -20,7 +20,7 @@ These topic respectively relay the state of button (1 if pressed, 0 else), the s
 
 In addition to the 3 original cameras coming with Baxter (head_camera, left and right hand_camera), a camera called "head_camera_2"has been added on Baxter's head, as the capture belows shows. This new camera, unlike the original head_camera, sees entirely the table.
 
-![Screenshot from 2016-06-21 20:50:38.png](https://bitbucket.org/repo/GLdKKe/images/656878577-Screenshot%20from%202016-06-21%2020:50:38.png)
+![ABC](https://bitbucket.org/repo/GLdKKe/images/656878577-Screenshot%20from%202016-06-21%2020:50:38.png)
 
 ![Screenshot from 2016-06-21 20:58:43.png](https://bitbucket.org/repo/GLdKKe/images/3053352798-Screenshot%20from%202016-06-21%2020:58:43.png)
 
