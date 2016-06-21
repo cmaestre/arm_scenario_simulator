@@ -15,14 +15,17 @@
 
 At this point, if you run ```rostopic list```, you can observe many topics related to Baxter and three topics related to the environment listed here : 
 
-![Screenshot from 2016-06-21 20:45:51.png](https://bitbucket.org/repo/GLdKKe/images/288501238-Screenshot%20from%202016-06-21%2020:45:51.png)
-These topic respectively relay the state of button (1 if pressed, 0 else), the state of the lever (1 for one side, 0 for the other) and the presence of an object in the pocket (1 if yes, 0 if not).
+![topics1.png](https://bitbucket.org/repo/GLdKKe/images/1099375156-topics1.png)
 
-In addition to the 3 original cameras coming with Baxter (head_camera, left and right hand_camera), a camera called "head_camera_2"has been added on Baxter's head, as the capture belows shows. This new camera, unlike the original head_camera, sees entirely the table.
+These topics respectively relay the state of the button (1 if pressed, 0 else), the state of the lever (1 for one side, 0 for the other) and the presence of an object in the pocket (1 if yes, 0 if not).
 
-![ABC](https://bitbucket.org/repo/GLdKKe/images/656878577-Screenshot%20from%202016-06-21%2020:50:38.png)
+In addition to the 3 original cameras coming with Baxter (head_camera, left and right hand_camera), a camera called "head_camera_2"has been added on Baxter's head, as the capture belows shows. This new camera, unlike the original head_camera, entirely captures the table.
 
-![Screenshot from 2016-06-21 20:58:43.png](https://bitbucket.org/repo/GLdKKe/images/3053352798-Screenshot%20from%202016-06-21%2020:58:43.png)
+![topics2.png](https://bitbucket.org/repo/GLdKKe/images/655402798-topics2.png)
+
+![head_camera_2.png](https://bitbucket.org/repo/GLdKKe/images/451840738-head_camera_2.png)
+An snapshot of head_camera_2 shown in Rviz. A gaussian noise has been added to the image for more realism.
+
 
 ##Already done : 
 * A table with a pocket and a sensor publishing (on a ROS topic) whether there is an object inside the pocket or not.
