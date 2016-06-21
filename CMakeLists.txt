@@ -117,6 +117,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_subdirectory(models/DREAM_table/plugins)
 add_subdirectory(models/DREAM_lever/plugins)
 add_subdirectory(models/DREAM_push_button/plugins)
 

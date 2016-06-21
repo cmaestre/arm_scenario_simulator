@@ -23,13 +23,11 @@ namespace gazebo
 
       // Listen to the update event. This event is broadcast every
       // simulation iteration.
-      this->updateConnection = event::Events::ConnectWorldUpdateBegin(
-          boost::bind(&ButtonPusher::OnUpdate, this, _1));
+      this->updateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&ButtonPusher::OnUpdate, this, _1));
     }
 
     // Called by the world update start event
-    public: void OnUpdate(const common::UpdateInfo & /*_info*/)
-    {
+    public: void OnUpdate(const common::UpdateInfo & /*_info*/){
       this->model->GetJoint("glider")->SetForce(0, 6);
     }
   };

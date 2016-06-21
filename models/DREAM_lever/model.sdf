@@ -27,6 +27,12 @@
                 <uri>model://DREAM_lever/meshes/base.dae</uri>
             </mesh>
         </geometry>
+        <material>
+          <diffuse>0.1 0.1 0.3 1</diffuse>
+          <ambient>0.1 0.1 0.15 1</ambient>
+          <specular>0.5 0.5 0.6 1</specular>
+          <emissive>0 0 0 0</emissive>
+        </material>
       </visual>
     </link>
 
@@ -57,6 +63,12 @@
                 <uri>model://DREAM_lever/meshes/lever.dae</uri>
             </mesh>
         </geometry>
+        <material>
+          <diffuse>0.7 0.7 0.9 1</diffuse>
+          <ambient>0.1 0.1 0.2 1</ambient>
+          <specular>0.8 0.8 0.95 1</specular>
+          <emissive>0 0 0 0</emissive>
+        </material>
       </visual>
     </link>
 

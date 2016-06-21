@@ -8,22 +8,22 @@
     
     <include>
       <uri>model://ground_plane</uri>
+      <pose>0 0 -0.01  0 0 0</pose>
     </include>
-
     <include>
       <uri>model://sun</uri>
     </include>
 
     <include>
       <uri>model://cafe</uri>
-      <pose>0 0 0  0 0 0</pose>
+      <pose>0 0 -0.19  0 0 0</pose>
       <static>true</static>
     </include>
 
     <include>
       <uri>model://DREAM_table</uri>
-      <pose>0.6 0 0.75  0 0 -1.570796</pose>
-      <static>true</static>
+      <pose>0.6 0 0  0 0 -1.570796</pose>
+  <!--<static>true</static>-->
     </include>
 
   </world>

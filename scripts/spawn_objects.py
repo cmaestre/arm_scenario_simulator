@@ -45,11 +45,11 @@ objects_to_load.append({'name' : 'lever1',
 
 objects_to_load.append({'name' : 'cube1',
                         'path' : gazebo_models_path+'/DREAM_cube/model.sdf',
-                        'pose' : Pose(position=Point(x=0.7, y=0.3, z=0.76)) })
+                        'pose' : Pose(position=Point(x=0.7, y=0.3, z=0.78)) })
 
 objects_to_load.append({'name' : 'cylinder1',
                         'path' : gazebo_models_path+'/DREAM_cylinder/model.sdf',
-                        'pose' : Pose(position=Point(x=0.6, y=0.2, z=0.76)) })
+                        'pose' : Pose(position=Point(x=0.6, y=0.2, z=0.78)) })
 sucessfully_loaded = []
 
 
