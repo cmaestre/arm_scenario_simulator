@@ -13,6 +13,16 @@
 
 ![aperçu.png](https://bitbucket.org/repo/GLdKKe/images/3521778972-aper%C3%A7u.png)
 
+At this point, if you run ```rostopic list```, you can observe many topics related to Baxter and three topics related to the environment listed here : 
+![Screenshot from 2016-06-21 20:45:51.png](https://bitbucket.org/repo/GLdKKe/images/2024909958-Screenshot%20from%202016-06-21%2020:45:51.png)
+These topic respectively relay the state of button (1 if pressed, 0 else), the state of the lever (1 for one side, 0 for the other) and the presence of an object in the pocket (1 if yes, 0 if not).
+
+In addition to the 3 original cameras coming with Baxter (head_camera, left and right hand_camera), a camera called "head_camera_2"has been added on Baxter's head, as the capture belows shows. This new camera, unlike the original head_camera, sees entirely the table.
+
+![Screenshot from 2016-06-21 20:50:38.png](https://bitbucket.org/repo/GLdKKe/images/656878577-Screenshot%20from%202016-06-21%2020:50:38.png)
+
+![Screenshot from 2016-06-21 20:58:43.png](https://bitbucket.org/repo/GLdKKe/images/3053352798-Screenshot%20from%202016-06-21%2020:58:43.png)
+
 ##Already done : 
 * A table with a pocket and a sensor publishing (on a ROS topic) whether there is an object inside the pocket or not.
 * Models for interactive objects (buttons, levers) with sensors publishing the state on objects on both Gazebo and ROS topics.
