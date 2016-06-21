@@ -117,6 +117,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_subdirectory(models/DREAM_lever/plugins)
+add_subdirectory(models/DREAM_push_button/plugins)
+
 ## Declare a C++ library
 # add_library(dream_scenario
 #   src/${PROJECT_NAME}/dream_scenario.cpp
@@ -186,3 +189,4 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
