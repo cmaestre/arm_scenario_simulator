@@ -14,13 +14,12 @@
 ![aperçu.png](https://bitbucket.org/repo/GLdKKe/images/3521778972-aper%C3%A7u.png)
 
 ##Already done : 
-* A table with a pocket.
+* A table with a pocket and a sensor publishing (on a ROS topic) whether there is an object inside the pocket or not.
 * Models for interactive objects (buttons, levers) with sensors publishing the state on objects on both Gazebo and ROS topics.
 * Models for basic objects (cube and cylinder).
-* Addtitional camera mounted on top of Baxter's head which points to the table (unlike Baxter's original head camera which stares too high).
-* Provided by rethinkRobotics : simple ROS interface to control Baxter (in python).
+* Additional camera mounted on top of Baxter's head which points to the table (unlike Baxter's original head camera which stares too high).
+* Provided by RethinkRobotics : simple ROS interface to control Baxter (in python).
 
 ##To do :
-* add a sensor to the table's pocket
-* add textures to objects
-* testing simulation speed increase possibilities
+* Test if it is possible to increase simulation speed
+* Improve textures of table and objects
