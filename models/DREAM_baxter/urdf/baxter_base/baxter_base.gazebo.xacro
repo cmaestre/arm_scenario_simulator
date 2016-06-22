@@ -55,6 +55,7 @@
   <gazebo reference="left_w2">
     <implicitSpringDamper>1</implicitSpringDamper>
   </gazebo>
+
   <!-- Gazebo-Specific Sensor Properties -->
   <gazebo reference="head_camera">
     <sensor name="head_camera" type="camera">
@@ -94,6 +95,7 @@
       </plugin>
     </sensor>
   </gazebo>
+
   <gazebo reference="head_camera_2">
     <sensor name="head_camera_2" type="camera">
       <update_rate>30.0</update_rate>
@@ -116,9 +118,9 @@
         </noise>
       </camera>
       <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+        <cameraName>head_camera_2</cameraName>
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>head_camera_2</cameraName>
         <imageTopicName>image</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>head_camera_2</frameName>
@@ -132,6 +134,7 @@
       </plugin>
     </sensor>
   </gazebo>
+
   <gazebo reference="right_hand_camera">
     <sensor name="right_hand_camera" type="camera">
       <update_rate>30.0</update_rate>
@@ -154,9 +157,9 @@
         </noise>
       </camera>
       <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+        <cameraName>right_hand_camera</cameraName>
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>right_hand_camera</cameraName>
         <imageTopicName>image</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>right_hand_camera</frameName>
@@ -170,6 +173,7 @@
       </plugin>
     </sensor>
   </gazebo>
+
   <gazebo reference="left_hand_camera">
     <sensor name="left_hand_camera" type="camera">
       <update_rate>30.0</update_rate>
@@ -192,9 +196,9 @@
         </noise>
       </camera>
       <plugin filename="libgazebo_ros_camera.so" name="camera_controller">
+        <cameraName>left_hand_camera</cameraName>
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>left_hand_camera</cameraName>
         <imageTopicName>image</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>left_hand_camera</frameName>
@@ -208,6 +212,7 @@
       </plugin>
     </sensor>
   </gazebo>
+
   <gazebo reference="display">
     <visual>
       <plugin name="screen_video_controller" filename="libgazebo_ros_video.so">
@@ -217,6 +222,7 @@
       </plugin>
     </visual>
   </gazebo>
+
   <gazebo reference="sonar_ring">
     <sensor name="sonar" type="ray">
       <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
@@ -251,6 +257,7 @@
       <update_rate>100.0</update_rate>
     </sensor>
   </gazebo>
+
   <gazebo reference="right_hand_range">
     <sensor name="ir_right" type="ray">
       <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
@@ -279,6 +286,7 @@
       <update_rate>100.0</update_rate>
     </sensor>
   </gazebo>
+
   <gazebo reference="left_hand_range">
     <sensor name="ir_left" type="ray">
       <pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>

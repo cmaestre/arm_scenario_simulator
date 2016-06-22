@@ -44,21 +44,18 @@
           <box><size>0.175 0.175 0.002</size></box>
         </geometry>
         <material>
-          <diffuse>0.9 0.9 0.7 1</diffuse>
-          <ambient>0.3 0.3 0.15 1</ambient>
-          <specular>0.95 0.95 0.9 1</specular>
+          <diffuse>0.8 0.8 0.2 1</diffuse>
+          <ambient>0.7 0.7 0.1 1</ambient>
+          <specular>0.95 0.95 0.8 1</specular>
           <emissive>0 0 0 0</emissive>
         </material>
       </visual>
 
       <sensor type="contact" name="contact">
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
         <visualize>true</visualize>
         <contact>
           <collision>pocket_collision</collision>
         </contact>
-
         <plugin name="my_plugin" filename="libDREAM_tablepocket_sensor.so"/>
       </sensor>
     </link>

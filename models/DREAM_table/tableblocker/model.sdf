@@ -1,0 +1,166 @@
+<?xml version='1.0'?>
+<sdf version="1.4">
+<model name="TableBlocker">
+    <link name="transversal_right">
+      <pose>0.655 0 0.005 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.01 0.5 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.01 0.5 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="transversal_left">
+      <pose>-0.655 0 0.005 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.01 0.5 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.01 0.5 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="transversal_back">
+      <pose>0 0.255 0.005 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>1.3 0.01 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>1.3 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="transversal_frontright">
+      <pose>0.630 -0.255 0.005 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="transversal_frontleft">
+      <pose>-0.630 -0.255 0.005 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="vertical_fr">
+      <pose>0.630 -0.255 0.3 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.6</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="vertical_fl">
+      <pose>-0.630 -0.255 0.3 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.6</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="vertical_br">
+      <pose>0.630 0.255 0.3 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.6</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+
+    <link name="vertical_bl">
+      <pose>-0.630 0.255 0.3 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.6</size>
+          </box>
+        </geometry>
+      </collision>
+      <!--<visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>-->
+    </link>
+  </model>
+</sdf>

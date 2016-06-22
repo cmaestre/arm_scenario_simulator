@@ -2,7 +2,8 @@
 <sdf version="1.4">
   <world name="default">    
     <physics type="ode">
-      <real_time_update_rate>1000.0</real_time_update_rate>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <max_step_size>0.002</max_step_size>
       <gravity>0.0 0.0 -9.81</gravity>
     </physics>
     
@@ -14,16 +15,26 @@
       <uri>model://sun</uri>
     </include>
 
+    <!---->
     <include>
       <uri>model://cafe</uri>
       <pose>0 0 -0.19  0 0 0</pose>
       <static>true</static>
     </include>
+    <!---->
 
     <include>
       <uri>model://DREAM_table</uri>
       <pose>0.6 0 0  0 0 -1.570796</pose>
     </include>
+
+    <!---->
+    <include>
+      <uri>model://DREAM_table/tableblocker</uri>
+      <pose>0.6 0 0  0 0 -1.570796</pose>
+      <static>true</static>      
+    </include>
+    <!---->
 
   </world>
 </sdf>

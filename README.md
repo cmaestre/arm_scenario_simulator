@@ -35,5 +35,19 @@ An snapshot of head_camera_2 shown in Rviz. A gaussian noise has been added to t
 * Provided by RethinkRobotics : simple ROS interface to control Baxter (in python).
 
 ##To do :
-* Test if it is possible to increase simulation speed
 * Improve textures of table and objects
+
+## About simulating faster than real time :
+
+To my knowledge, it is possible to speed up the simulation of the physics engine by editing the file worlds/setup.world in two ways :
+1. increasing ```real_time_update_rate```, which is the number of update steps performed (per real second) to evolve the world.
+2. increasing ```max_step_size```, which is the virtual length (the duration in simulated world) of the update step mentioned at the previous point.
+
+```real_time_update_rate``` times per second, the physics engine makes the simulated world progress by ```max_step_size``` second, therefore the simulated world goes ```max_step_size * real_time_update_rate``` times faster than the real world.
+
+* By increasing ```real_time_update_rate``` while keeping ```max_step_size``` constant, you increase the required computational power of the simulation.
+* By increasing ```max_step_size``` while keeping ```real_time_update_rate``` constant, -I think- you decrease the simulation quality (linearizations are less accurate)
+
+Increasing the physics engine speeds do not speed up sensors: if you increase physics engine speed, the apparent update rate of sensors in the simulated world will be decreased, since the update rates defined in .sdf files are related to the expressed w.r.t real time. Make sure your increase the sensors update rate if you want to keep the same apparent update rate.
+
+On my computer, the limiting factor seems to be the cameras. Indeed they seem to be not able to capture more than 30 frames per (real) second : increasing the update_rate in models/DREAM_baxter/urdf/baxter_base/baxter_base.gazebo.xacro over 30 does not make the rate of the topic /cameras/*_camera/image go higher. Therefore, after speeding up the physics engine by a factor 2, the apparent update rate of the camera is a little less than 15 - which is still correct. However, it seems that this maximum frame rate is divided by the number of open cameras. So if a second camera is recording, each camera should have frame rate of 15 at physics speed x1, and 7.5 at physics speed x2. Other sensors like buttons, levers and presence in table's pocket have a much higher (real) update rate (in fact it is ```real_time_update_rate```) so even if their apparent update rate is decrease when accelerating the physics, this should not be the main issue compared to the cameras.
