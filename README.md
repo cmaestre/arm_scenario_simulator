@@ -40,8 +40,9 @@ An snapshot of head_camera_2 shown in Rviz. A gaussian noise has been added to t
 ## About simulating faster than real time :
 
 To my knowledge, it is possible to speed up the simulation of the physics engine by editing the file worlds/setup.world in two ways :
-1. increasing ```real_time_update_rate```, which is the number of update steps performed (per real second) to evolve the world.
-2. increasing ```max_step_size```, which is the virtual length (the duration in simulated world) of the update step mentioned at the previous point.
+
+1. increasing ```real_time_update_rate``` (usually 1'000), which is the number of update steps performed (per real second) to evolve the world.
+2. increasing ```max_step_size``` (usually 0.001), which is the virtual length (the duration in simulated world) of the update step mentioned at the previous point.
 
 ```real_time_update_rate``` times per second, the physics engine makes the simulated world progress by ```max_step_size``` second, therefore the simulated world goes ```max_step_size * real_time_update_rate``` times faster than the real world.
 
