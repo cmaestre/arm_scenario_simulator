@@ -1,6 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
 <model name="lever">
+
     <link name="base">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
@@ -14,6 +15,7 @@
           <izz>0.0083</izz>
         </inertia>
       </inertial>
+
       <collision name="collision">
         <geometry>
             <mesh>
@@ -21,6 +23,7 @@
             </mesh>
         </geometry>
       </collision>
+
       <visual name="visual">
         <geometry>
             <mesh>
@@ -36,6 +39,8 @@
       </visual>
     </link>
 
+
+
     <link name="lever">
       <pose>0 0 0.015 0 0 0</pose>
       <inertial>
@@ -50,6 +55,7 @@
           <izz>0.0008</izz>
         </inertia>
       </inertial>
+
       <collision name="collision">
         <geometry>
             <mesh>
@@ -71,6 +77,8 @@
         </material>
       </visual>
     </link>
+
+
 
     <joint name="pivot" type="revolute">
         <pose>0 0 0 0 0 0</pose>
