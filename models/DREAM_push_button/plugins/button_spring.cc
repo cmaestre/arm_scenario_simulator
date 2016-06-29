@@ -28,7 +28,7 @@ namespace gazebo
 
     // Called by the world update start event
     public: void OnUpdate(const common::UpdateInfo & /*_info*/){
-      this->model->GetJoint("glider")->SetForce(0, 6);
+      this->model->GetJoint("glider")->SetForce(0, 2);
     }
   };
 

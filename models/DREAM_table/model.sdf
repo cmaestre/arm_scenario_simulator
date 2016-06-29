@@ -1,9 +1,21 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
 <model name="table">
+
     <link name="table">
       <self_collide>true</self_collide>
       <pose>0 0 0.751 0 0 0</pose>
+      <inertial>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.83</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.83</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.83</izz>
+        </inertia>
+      </inertial>
       <collision name="collision">
         <geometry>
             <mesh>
@@ -18,17 +30,6 @@
             </mesh>
         </geometry>
       </visual>
-      <inertial>
-        <mass>10</mass>
-        <inertia>
-          <ixx>0.83</ixx>
-          <ixy>0.0</ixy>
-          <ixz>0.0</ixz>
-          <iyy>0.83</iyy>
-          <iyz>0.0</iyz>
-          <izz>0.83</izz>
-        </inertia>
-      </inertial>
     </link>
 
     <link name="pocket">
@@ -72,7 +73,7 @@
                 <upper>0</upper>
             </limit>
         </axis>
-    </joint>
+    </joint>  
 
   </model>
 </sdf>

@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
 <model name="light_round">
-  <pose>0 0 0.01 0 0 0</pose>
+  <pose>0 0 0.005 0 0 0</pose>
 
     <link name="base">
       <self_collide>true</self_collide>
@@ -35,8 +35,8 @@
           </cylinder>
         </geometry>
         <material>
-          <diffuse>0.3 0.3 0.3 1</diffuse>
-          <ambient>0.5 0.5 0.5 1</ambient>
+          <diffuse>0.5 0.5 0.5 1</diffuse>
+          <ambient>0.3 0.3 0.3 1</ambient>
           <specular>0.8 0.8 0.8 1</specular>
           <emissive>0 0 0 0</emissive>
         </material>
@@ -47,7 +47,7 @@
 
     <link name="lamp">
       <self_collide>true</self_collide>
-      <pose>0 0 0.01 0 0 0</pose>
+      <pose>0 0 0.015 0 0 0</pose>
       <inertial>
         <mass>0.1</mass>
         <inertia>
@@ -76,6 +76,12 @@
             <length>0.02</length>
           </cylinder>
         </geometry>
+        <material>
+          <diffuse>0.5 0.5 0.5 0.1</diffuse>
+          <ambient>0.3 0.3 0.3 0.1</ambient>
+          <specular>0.7 0.7 0.7 0.1</specular>
+          <emissive>0 0 0 1</emissive>
+        </material>
         <plugin name="sensor" filename="libDREAM_change_color.so"/>
       </visual>
     </link>

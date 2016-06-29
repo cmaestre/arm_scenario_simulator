@@ -5,7 +5,7 @@
     <link name="base">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <mass>0.5</mass>
+        <mass>0.8</mass>
         <inertia>
           <ixx>0.0008</ixx>
           <ixy>0.0</ixy>
@@ -44,7 +44,7 @@
     <link name="lever">
       <pose>0 0 0.015 0 0 0</pose>
       <inertial>
-        <mass>0.2</mass>
+        <mass>0.1</mass>
         <pose>0 0 0.035 0 0 0</pose>
         <inertia>
           <ixx>0.0008</ixx>

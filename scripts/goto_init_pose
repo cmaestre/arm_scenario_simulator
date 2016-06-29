@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rosrun baxter_tools enable_robot.py -e
+rosrun baxter_tools tuck_arms.py -u
+rosrun arm_scenario_simulator goto_init_pose.py

@@ -4,7 +4,7 @@
     <link name="base">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
-        <mass>0.5</mass>
+        <mass>0.8</mass>
         <inertia>
           <ixx>0.0008</ixx>
           <ixy>0.0</ixy>
@@ -39,7 +39,7 @@
     <link name="button">
       <pose>0 0 0.005 0 0 0</pose>
       <inertial>
-        <mass>0.2</mass>
+        <mass>0.1</mass>
         <inertia>
           <ixx>0.0008</ixx>    
           <ixy>0.0</ixy>       
