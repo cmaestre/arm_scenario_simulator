@@ -11,30 +11,37 @@
 #include "ros/ros.h"
 #include "std_msgs/ColorRGBA.h"
 
-namespace gazebo{
-
-  class ChangeColor : public VisualPlugin {
-
+namespace gazebo
+{
+  class ChangeColor : public VisualPlugin
+  {
     private: rendering::VisualPtr visual;
-    private: ros::NodeHandle rosNode;
+    private: ros::NodeHandle* rosNode;
     private: ros::Subscriber rosSub;
+
+    // Destructor
+    ~ChangeColor()
+    {
+      delete this->rosNode;
+    }
 
     public: void Load(rendering::VisualPtr _parent, sdf::ElementPtr /*_sdf*/){
       this->visual = _parent;
 
       // Initialize ros, if it has not already bee initialized.
-      if (!ros::isInitialized()){
-        std::cout << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< "ROS init call" << std::endl<< std::endl<< std::endl<< std::endl<< std::endl<< std::endl;
+      if (!ros::isInitialized())
+      {
         int argc = 0;
         char **argv = NULL;
-        ros::init(argc, argv, this->visual->GetName()+"_rosnode", ros::init_options::NoSigintHandler);
+        ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
       }
 
       boost::regex re("::");
       std::string name = regex_replace(this->visual->GetName(), re, "/");
-      //std::cout << name << std::endl;
-
-      this->rosSub = this->rosNode.subscribe(name+"/set_color", 1, &ChangeColor::colorCallback, this);
+      //std::cout << "name : " << name << std::endl;
+      // Create our ROS node. This acts in a similar manner to the Gazebo node
+      this->rosNode = new ros::NodeHandle(name);
+      this->rosSub = this->rosNode->subscribe("set_color", 1, &ChangeColor::colorCallback, this);
     }
 
     public: void colorCallback(const std_msgs::ColorRGBA::ConstPtr& msg){

@@ -64,7 +64,7 @@ class Environment:
         r,g,b = 0,255,0
         if objects['button1'].is_pressed() and objects['lever1'].is_pushed(): g,b = 0,255
         objects['light_table0'].set_color(r,g,b)
-        if condition: objects['light_table0'].turn_on()
+        objects['light_table0'].set_on(condition)
 
         ''' Light up light_table1 if lever is pushed and the button is not pushed
         The color depend on what the content of the pocket '''
@@ -72,7 +72,7 @@ class Environment:
         r,g,b = 255,0,0
         if objects['table/pocket'].is_active(): b=255
         objects['light_table1'].set_color(r,g,b)
-        if condition: objects['light_table1'].turn_on()
+        objects['light_table1'].set_on(condition)
 
 
     def run(self):

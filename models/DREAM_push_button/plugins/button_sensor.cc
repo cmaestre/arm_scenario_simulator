@@ -28,14 +28,10 @@ namespace gazebo
 
     public: void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
     {
-      // Store the pointer to the model
       this->model = _parent;
-      // Create our Gazebo node
       this->node = transport::NodePtr(new transport::Node());
-      // Initialize the node with the world name
       this->node->Init(this->model->GetName());
       this->pressed_publisher = this->node->Advertise<msgs::Int>("~/is_pressed");
-      // Listen to the update event. This event is broadcast every simulation iteration.
       this->updateConnection = event::Events::ConnectWorldUpdateBegin(boost::bind(&ButtonSensor::OnUpdate, this, _1));
 
       // Initialize ros, if it has not already bee initialized.
@@ -43,9 +39,8 @@ namespace gazebo
       {
         int argc = 0;
         char **argv = NULL;
-        ros::init(argc, argv, this->model->GetName()+"_rosnode", ros::init_options::NoSigintHandler);
+        ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
       }
-      // Create our ROS node. This acts in a similar manner to the Gazebo node
       // Spin up the queue helper thread.
       this->rosPub = this->rosNode.advertise<std_msgs::Int8>(this->model->GetName()+"/is_pressed", 1);
     }

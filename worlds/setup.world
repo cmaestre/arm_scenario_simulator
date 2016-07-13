@@ -38,32 +38,26 @@
     </include>
     <!-- -->
 
-    <!-- -->
     <include>
       <name>light_table0</name>
       <uri>model://DREAM_light_round</uri>
       <pose>1.05 -0.0 0.92  0 -0.7854 0</pose>
       <static>true</static>      
     </include>
-    <!-- -->
 
-    <!-- -->
     <include>
       <name>light_table1</name>
       <uri>model://DREAM_light_square</uri>
       <pose>1.05 -0.2 0.92  0 -0.7854 0</pose>
       <static>true</static>      
     </include>
-    <!-- -->
 
-    <!-- -->
     <include>
       <name>light_table2</name>
       <uri>model://DREAM_light_round</uri>
       <pose>1.05 -0.4 0.92  0 -0.7854 0</pose>
       <static>true</static>      
     </include>
-    <!-- -->
 
   </world>
 </sdf>
