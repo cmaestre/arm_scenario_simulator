@@ -6,7 +6,7 @@
       <self_collide>true</self_collide>
       <pose>0 0 0.751 0 0 0</pose>
       <inertial>
-        <mass>10</mass>
+        <mass>100</mass>
         <inertia>
           <ixx>0.83</ixx>
           <ixy>0.0</ixy>
@@ -60,7 +60,7 @@
         <plugin name="my_plugin" filename="libDREAM_tablepocket_sensor.so"/>
       </sensor>
     </link>
-    
+
 
     <joint name="encastrement" type="revolute">
         <pose>0 0 0 0 0 0</pose>
@@ -73,7 +73,7 @@
                 <upper>0</upper>
             </limit>
         </axis>
-    </joint>  
+    </joint>
 
   </model>
 </sdf>
