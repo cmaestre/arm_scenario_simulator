@@ -17,7 +17,7 @@
       <collision name="collision">
         <geometry>
           <cylinder>
-            <radius>0.02</radius>
+            <radius>0.015</radius>
             <length>0.06</length>
           </cylinder>
         </geometry>
@@ -25,10 +25,11 @@
       <visual name="visual">
         <geometry>
           <cylinder>
-            <radius>0.02</radius>
+            <radius>0.015</radius>
             <length>0.06</length>
           </cylinder>
         </geometry>
+        <plugin name="color_plugin" filename="libDREAM_change_color.so"/>
       </visual>
     </link>
   </model>

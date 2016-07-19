@@ -10,6 +10,7 @@
 
 #include "ros/ros.h"
 #include "std_msgs/ColorRGBA.h"
+#include "arm_scenario_simulator/MaterialColor.h"
 
 namespace gazebo
 {
@@ -44,10 +45,26 @@ namespace gazebo
       this->rosSub = this->rosNode->subscribe("set_color", 1, &ChangeColor::colorCallback, this);
     }
 
-    public: void colorCallback(const std_msgs::ColorRGBA::ConstPtr& msg){
-      common::Color color(msg->r, msg->g, msg->b, msg->a);
-      //std::cout << "Receiving ::" << std::endl  << color.r << std::endl << color.g << std::endl << color.b << std::endl;
-      this->visual->SetEmissive(color);
+    public: void colorCallback(const arm_scenario_simulator::MaterialColor::ConstPtr& msg){
+      if (msg->color_type.size()!= msg->color.size()){
+        throw "Unconsistent fields size in MaterialColor message";
+      }
+      int type;
+      std_msgs::ColorRGBA rgba;
+      common::Color color;
+      for (unsigned int i=0; i<msg->color_type.size(); i++) {
+        rgba = msg->color[i];
+        type = msg->color_type[i];
+        color = common::Color(rgba.r, rgba.g, rgba.b, rgba.a);
+        //std::cout << "Receiving ::" << std::endl  << color.r << std::endl << color.g << std::endl << color.b << std::endl;
+        switch(type){
+          case 0: this->visual->SetDiffuse(color); break;
+          case 1: this->visual->SetAmbient(color); break;
+          case 2: this->visual->SetSpecular(color); break;
+          case 3: this->visual->SetEmissive(color);  break;
+          default : std::cout << "Unknown color_type index : " << type << std::endl; break;
+        }
+      }
     }
 
   };

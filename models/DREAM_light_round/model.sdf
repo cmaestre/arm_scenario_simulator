@@ -82,7 +82,7 @@
           <specular>0.7 0.7 0.7 0.1</specular>
           <emissive>0 0 0 1</emissive>
         </material>
-        <plugin name="sensor" filename="libDREAM_change_color.so"/>
+        <plugin name="color_plugin" filename="libDREAM_change_color.so"/>
       </visual>
     </link>
 

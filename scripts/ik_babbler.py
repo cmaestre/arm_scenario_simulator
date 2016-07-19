@@ -72,14 +72,16 @@ if __name__ == "__main__":
     print("Enabling robot... ")
     rs.enable()
     print("Running. Ctrl-c to quit")
-    x0, y0 = 0.6, 0.3
-    d_x, d_y = 0.3, 0.4
+    x0, y0 = 0.7, 0.40
+    d_x, d_y = 0.4, 0.5
     d_a = 20
     limb = baxter_interface.Limb('left')
     down = True
 
-    for k in range(30):
-        z = -0.15 if down else 0
+    k, k_success = 0,0
+    while k_success<30 and k<100:
+        k +=1
+        z = -0.14 if down else -0.05
         x = x0 + random.uniform(-d_x,d_x)
         y = y0 + random.uniform(-d_y,d_y)
 
@@ -95,4 +97,5 @@ if __name__ == "__main__":
             joints = IK(limb, Point(x,y,z), orientation)
             limb.move_to_joint_positions(joints, timeout = 5)
             down = not down
+            k_success +=1
         except Exception as e:pass

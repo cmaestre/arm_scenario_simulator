@@ -23,6 +23,7 @@ class Environment:
         self.objects[obj.gazebo_name] = obj
 
     def __init__(self):
+        ''' Create handles to (and spawn) simulated object in Gazebo'''
         self.objects = {}
 
         self.add_object( arm_sim.Button('button1').spawn(Point(x=0.5, y=0.1, z=0.76)) )
@@ -33,18 +34,44 @@ class Environment:
         self.add_object( arm_sim.GazeboObject('cube1').spawn(   'DREAM_cube',      Point(x=0.5, y=0.55, z=0.78) ))
         self.add_object( arm_sim.GazeboObject('cube2').spawn(   'DREAM_cube',      Point(x=0.4, y=0.2, z=0.78) ))
         self.add_object( arm_sim.GazeboObject('cube3').spawn(   'DREAM_cube',      Point(x=0.8, y=0.3, z=0.78) ))
-        self.add_object( arm_sim.GazeboObject('cylinder1').spawn('DREAM_cylinder',  Point(x=0.75, y=0.05, z=0.78) ))
-        self.add_object( arm_sim.GazeboObject('cylinder2').spawn('DREAM_cylinder',  Point(x=0.45, y=0.35, z=0.78) ))
-        #self.add_object( arm_sim.GazeboObject('cylinder2').spawn('DREAM_cylinder',  Point(x=1.1, y=0.35, z=0.95) ))
+        self.add_object( arm_sim.GazeboObject('cylinder1').spawn('DREAM_cylinder',  Point(x=0.75, y=0.05, z=0.79) ))
+        self.add_object( arm_sim.GazeboObject('cylinder2').spawn('DREAM_cylinder',  Point(x=0.45, y=0.35, z=0.79) ))
 
-        # the following objects are not spawn, cause already present in the world before this script i run
+        # the following objects are not spawn, cause already present in the world before this script is run
         self.add_object( arm_sim.Pocket('table/pocket') )
         self.add_object( arm_sim.Light('light_table0',{'r':255,'g':0,'b':255}) )
         self.add_object( arm_sim.Light('light_table1',{'r':255,'g':255,'b':0}) )
         self.add_object( arm_sim.Light('light_table2',{'r':0,'g':255,'b':255}) )
 
+        # to let the publishers notify the master, so that the following commands are not discarded
+        rospy.sleep(1)
+        self.init()
+
+
     def delete_models(self):
         for obj in self.objects.keys(): self.objects[obj].__del__()
+
+    def init(self):
+        ''' Initialize objects attributes (color) and lights states '''
+        self.objects['light_table0'].set_on(False)
+        self.objects['light_table1'].set_on(False)
+        self.objects['light_table2'].set_on(False)
+
+        self.objects['button1'].set_base_color(30,20,220)
+        self.objects['button1'].set_button_color(100,80,250)
+
+        self.objects['button3'].set_base_color(210,20,220)
+        self.objects['button3'].set_button_color(240,70,240)
+
+        self.objects['cube1'].set_color(230,220,10)
+        self.objects['cube2'].set_color(200,20,20)
+        self.objects['cylinder1'].set_color(50,50,220)
+
+    def run(self):
+        rate = rospy.Rate(100)
+        while not rospy.is_shutdown():
+            self.rules()
+            rate.sleep()
 
     def rules(self):
         objects = self.objects
@@ -52,9 +79,11 @@ class Environment:
         if objects['button1'].is_pressed(): objects['light_table0'].turn_on()
         else: objects['light_table0'].turn_off()
 
-        if objects['button2'].is_pressed(): objects['light_table1'].set_color(255,126,80)
-        if objects['button3'].is_pressed(): objects['light_table1'].set_color(20,126,255)
-        if objects['button2'].is_pressed() or objects['button3'].is_pressed():
+        if objects['button2'].is_pressed():
+            objects['light_table1'].set_color(255,126,80)
+            objects['light_table1'].turn_on()
+        elif objects['button3'].is_pressed():
+            objects['light_table1'].set_color(20,126,255)
             objects['light_table1'].turn_on()
         else:
             objects['light_table1'].turn_off()
@@ -71,23 +100,12 @@ class Environment:
         objects['light_table1'].set_on(condition)
         '''
 
-
-    def run(self):
-        rate = rospy.Rate(100)
-        while not rospy.is_shutdown():
-            self.rules()
-            rate.sleep()
-
-
 def main():
     rospy.init_node("DREAM_environment_demo")
     env = Environment()
     rospy.on_shutdown(env.delete_models)
-    print('sleeping to let sucriber notify master')
-    rospy.sleep(1)
-    print('Go')
-    #rospy.wait_for_message("/robot/sim/started", Empty)
     env.run()
+    print("Running. Ctrl-c to quit")
 
 
 if __name__ == '__main__':
