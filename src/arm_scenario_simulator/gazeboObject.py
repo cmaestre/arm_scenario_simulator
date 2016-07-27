@@ -59,7 +59,7 @@ class GazeboObject:
             return None
 
     def delete(self):
-        if self.spawned: return
+        if not self.spawned: return
         try:
             rospy.loginfo("Deleting "+self.gazebo_name)
             resp_delete = GazeboObject.delete_model_srv(self.gazebo_name)
