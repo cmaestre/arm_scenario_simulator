@@ -52,7 +52,7 @@ class GazeboObject:
             rospy.loginfo(e)
             return None
 
-    def __del__(self):
+    def delete(self):
         if not self.spawned: return
         try:
             rospy.loginfo("Deleting "+self.gazebo_name)

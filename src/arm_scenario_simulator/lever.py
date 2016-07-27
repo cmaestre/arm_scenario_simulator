@@ -16,9 +16,6 @@ class Lever(GazeboObject):
     def spawn(self, position, orientation = None, **extra):
         return GazeboObject.spawn(self, 'DREAM_lever', position, orientation, **extra)
 
-    def __del__(self):
-        GazeboObject.__del__(self)
-
     def update_state(self, message):
         self._pushed = message.data==1
 
