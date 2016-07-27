@@ -86,7 +86,7 @@ class Environment:
         objects['light_table1'].set_state(on=light1_condition, color=light1_color)
 
         # Complex association : a light is turned on by a particular event, and turned off by another one
-        if objects['table/pocket'].is_active(): objects['light_table2'].turn_on()
+        if objects['lever1'].is_pushed(): objects['light_table2'].turn_on()
         if objects['button1'].is_pressed(): objects['light_table2'].turn_off()
 
 
