@@ -16,9 +16,6 @@ class Button(GazeboObject):
     def spawn(self, position, orientation = None, **extra):
         return GazeboObject.spawn(self, 'DREAM_push_button', position, orientation, **extra)
 
-    def __del__(self):
-        GazeboObject.__del__(self)
-
     def update_state(self, message):
         self._pressed = message.data==1
 

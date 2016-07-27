@@ -19,10 +19,19 @@ def axis_to_quat(axis, angle):
 
 class Environment:
 
+    def __init__(self):
+        rospy.Subscriber('/environment/reset', Empty, self.reset_callback, queue_size = 1)
+        self.init()
+        self.run()
+
+    def reset_callback(self, message):
+        for obj in self.objects.keys(): self.objects[obj].__del__()
+        self.init()
+
     def add_object(self, obj):
         self.objects[obj.gazebo_name] = obj
 
-    def __init__(self):
+    def init(self):
         ''' Create handles to (and spawn) simulated object in Gazebo'''
         self.objects = {}
 
@@ -45,13 +54,6 @@ class Environment:
 
         # to let the publishers notify the master, so that the following commands are not discarded
         rospy.sleep(1)
-        self.init()
-
-
-    def delete_models(self):
-        for obj in self.objects.keys(): self.objects[obj].__del__()
-
-    def init(self):
         ''' Initialize objects attributes (color) and lights states '''
         self.objects['light_table0'].set_on(False)
         self.objects['light_table1'].set_on(False)
@@ -70,7 +72,8 @@ class Environment:
     def run(self):
         rate = rospy.Rate(100)
         while not rospy.is_shutdown():
-            self.rules()
+            try: self.rules()
+            except KeyError: pass #When deleting models, key errors may occur
             rate.sleep()
 
     def rules(self):
@@ -102,9 +105,7 @@ class Environment:
 
 def main():
     rospy.init_node("DREAM_environment_demo")
-    env = Environment()
-    rospy.on_shutdown(env.delete_models)
-    env.run()
+    Environment()
     print("Running. Ctrl-c to quit")
 
 
