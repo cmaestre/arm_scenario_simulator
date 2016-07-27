@@ -7,6 +7,7 @@ from .parameters import COLOR_TYPE
 class Light(GazeboObject):
     types = {'square':'DREAM_light_square', 'round':'DREAM_light_round'}
     off_color = ColorRGBA(0.0,0.0,0.0,1)
+    colorable_links = []
 
     def __init__(self, name, color=None):
         GazeboObject.__init__(self, name)

@@ -57,15 +57,16 @@ class Environment:
         self.objects['light_table1'].set_state(on = False, force = True) # when force is False or ommited, the python object only publish a ros message if it considers it is necessary
         self.objects['light_table2'].set_state(on = False, force = True) # it is recommended to force at initialization time to ensure having a consistent state
 
-        self.objects['button1'].set_base_color(30,20,220)
-        self.objects['button1'].set_button_color(100,80,250)
+        self.objects['button1'].set_base_color(rgba = [30,20,220])
+        self.objects['button1'].set_button_color(rgba = [100,80,250])
 
-        self.objects['lever1'].set_base_color(210,20,220)
-        self.objects['lever1'].set_lever_color(240,70,240)
+        self.objects['lever1'].set_base_color(rgba = [20,60,10])
+        self.objects['lever1'].set_lever_color(rgba = [150,190,150])
 
-        self.objects['cube1'].set_color(230,220,10)
-        self.objects['cube2'].set_color(200,20,20)
-        self.objects['cylinder1'].set_color(50,50,220)
+        self.objects['cube1'].set_color(rgba = [230,220,10])
+        self.objects['cube2'].set_color(rgba = [200,20,20])
+        self.objects['cylinder1'].set_color(rgba = [50,50,220])
+
 
     def run(self):
         rate = rospy.Rate(100)
@@ -88,6 +89,7 @@ class Environment:
         # Complex association : a light is turned on by a particular event, and turned off by another one
         if objects['lever1'].is_pushed(): objects['light_table2'].turn_on()
         if objects['button1'].is_pressed(): objects['light_table2'].turn_off()
+
 
 
 def main():
