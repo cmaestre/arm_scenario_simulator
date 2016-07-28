@@ -41,7 +41,7 @@ All these objects can be spawned and deleted directly from python code, allowing
 
 The state of buttons, levers and the table's pocket can also be retrieved easily from python code, and the lights can be switched on/off directly from python as well. This enables you to define simple or complex rules relating objects states and lights (e.g, turn on light2 iif this buttonC in pressed)
 
-The example script [spawn_objects_example](Link https://bitbucket.org/u2isir/arm_scenario_simulator/src/006e1567f4f55dff2f7df87ab11dadd83affbc01/scripts/spawn_objects_example?at=master&fileviewer=file-view-default) aims at demonstrating how to do this
+The example script [spawn_objects_example](https://bitbucket.org/u2isir/arm_scenario_simulator/src/1685739a91dc1a0840ca1bd89dc1bc6fcdefdd0f/scripts/spawn_objects_example?at=master&fileviewer=file-view-default) aims at demonstrating how to do this
 
 
 ##Already done : 
