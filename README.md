@@ -14,7 +14,7 @@
 
 ![gazebo.png](https://bitbucket.org/repo/GLdKKe/images/874311045-gazebo.png)
 
-## basic setup
+## Basic setup
 Launching the world `baxter_world.launch` will start a ros master, gazebo and spawn:
 
 - baxter robot with all its original sensors and actuators (cameras, grippers, lasers ...)
@@ -26,7 +26,22 @@ In addition to the 3 original cameras coming with Baxter (head_camera, left and 
 ![topics2.png](https://bitbucket.org/repo/GLdKKe/images/655402798-topics2.png)
 
 ![pov.png](https://bitbucket.org/repo/GLdKKe/images/2147259962-pov.png)
-An snapshot of head_camera_2 shown in Rviz. A gaussian noise has been added to the image for more realism.
+
+An snapshot of head_camera_2 shown. A gaussian noise has been added to the image for more realism.
+
+## Additional objects
+
+In addition to this basic setup, the arm_scenario_simulator comes with objects that can be spawned or removed as you wish:
+
+- buttons
+- levers
+- lights
+
+All these objects can be spawned and deleted directly from python code, allowing you to automate experiment initialization : no need to write one `.world` file for each experiment setup you want, just write a python script to spawn variable amount of objects at different position on the table, reset the setup, etc ...)
+
+The state of buttons, levers and the table's pocket can also be retrieved easily from python code, and the lights can be switched on/off directly from python as well. This enables you to define simple or complex rules relating objects states and lights (e.g, turn on light2 iif this buttonC in pressed)
+
+The example script [spawn_objects_example](Link https://bitbucket.org/u2isir/arm_scenario_simulator/src/006e1567f4f55dff2f7df87ab11dadd83affbc01/scripts/spawn_objects_example?at=master&fileviewer=file-view-default) aims at demonstrating how to do this
 
 
 ##Already done : 
