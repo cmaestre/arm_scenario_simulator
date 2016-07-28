@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+
+import rospy
+import math
+import time
+
+from baxter_core_msgs.msg import (
+   HeadPanCommand,
+   HeadState,
+)
+
+class head_controler_fix:
+
+    def __init__(self):
+        self._state = dict()
+        self.target = 0.0
+        self.speed = 0.5
+        rospy.Subscriber('/robot/head/command_head_pan_simulator_fix', HeadPanCommand, self._on_pan_cmd)
+        rospy.Subscriber('/robot/head/head_state', HeadState, self._on_head_state)
+        pub_pan = rospy.Publisher('/robot/head/command_head_pan', HeadPanCommand, queue_size=10)
+
+        eps = 0.02 #
+        rate_frequency = 5
+        rate = rospy.Rate(rate_frequency)
+
+        while not rospy.is_shutdown():
+            last_time = time.time()
+            rate.sleep()
+            if 'pan' not in self._state.keys(): continue
+            #if self._state['pan']>0.9: self.target = 0
+            #if self._state['pan']<0.1: self.target = 1.0
+
+            diff = self.target-self._state['pan']
+            if abs(diff)>eps:
+                delta = math.copysign(self.speed/rate_frequency, diff)
+                if abs(delta)>abs(diff): delta = diff
+                coeff = 3 if abs(diff)>2*abs(delta) else 1
+                target = self._state['pan']+ coeff*delta
+
+                print('current : '+str(self._state['pan'])+'  /  target : '+str(target))
+                now = time.time()
+                print(now-last_time)
+                last_time = now
+                pub_pan.publish( HeadPanCommand(target, 0, True) )
+
+
+    def _on_pan_cmd(self, msg):
+        self.target = msg.target
+        self.speed = abs(msg.speed_ratio)
+
+    def _on_head_state(self, msg):
+        self._state['pan'] = msg.pan
+        self._state['panning'] = msg.isTurning
+        self._state['nodding'] = msg.isNodding
+
+
+if __name__ == '__main__':
+    try:
+        rospy.loginfo('Starting head_controler_fix node')
+        rospy.init_node('head_controler_fix')
+        controler = head_controler_fix()
+    except rospy.ROSInterruptException:
+        pass
