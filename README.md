@@ -37,12 +37,13 @@ In addition to this basic setup, the arm_scenario_simulator comes with objects t
 - levers
 - lights
 
-All these objects can be spawned and deleted directly from python code, allowing you to automate experiment initialization : no need to write one `.world` file for each experiment setup you want, just write a python script to spawn variable amount of objects at different position on the table, reset the setup, etc ...)
+All these objects can be spawned and deleted directly from python code, allowing you to automate experiment initialization : no need to write one `.world` file for each experiment setup you want, just write a python script to spawn a variable amount of objects at different positions on the table or to reset the setup, etc ...
 
 The state of buttons, levers and the table's pocket can also be retrieved easily from python code, and the lights can be switched on/off directly from python as well. This enables you to define simple or complex rules relating objects states and lights (e.g, turn on light2 iif this buttonC in pressed)
 
-The example script [spawn_objects_example](https://bitbucket.org/u2isir/arm_scenario_simulator/src/1685739a91dc1a0840ca1bd89dc1bc6fcdefdd0f/scripts/spawn_objects_example?at=master&fileviewer=file-view-default) aims at demonstrating how to do this
+The example script [spawn_objects_example](https://bitbucket.org/u2isir/arm_scenario_simulator/src/1685739a91dc1a0840ca1bd89dc1bc6fcdefdd0f/scripts/spawn_objects_example?at=master&fileviewer=file-view-default) aims at demonstrating how to do this.
 
+**Important note : color changes made at run-time with python or c++ code are only visible through cameras (therefore using rviz or image_view package), not in gazebo's window client.**
 
 ##Already done : 
 * A table with a pocket and a sensor publishing (on a ROS topic) whether there is an object inside the pocket or not.
