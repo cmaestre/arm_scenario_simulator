@@ -19,18 +19,25 @@ except rospy.ROSException: # if not, it is probably cause we're using the simula
     rospy.loginfo("You are using the simulator")
 
     fix_publisher = rospy.Publisher('/robot/head/command_head_pan_simulator_fix',  HeadPanCommand, queue_size=10)
-    def set_pan_speed(self, angle, speed):
+    def move_to_pan(self, angle, speed, blocking = False, margin=0.03, timeout=5):
+        start = rospy.get_time()
         msg = HeadPanCommand(angle, speed, True)
         fix_publisher.publish(msg)
+        if blocking:
+            rate = rospy.Rate(10)
+            while abs(self.pan() - angle)>margin:
+                if (rospy.get_time()-start)>timeout:
+                    rospy.logerr('Could not reach the target angle (+/- '+margin+' rad) within '+str(timeout)+ 'sec')
+                    break
+                rate.sleep()
+    Head.move_to_pan = move_to_pan #attach a new method to Head class
 
 
     launch = roslaunch.scriptapi.ROSLaunch()
     launch.start()
-    head_controler_fix_node = launch.launch(roslaunch.core.Node('arm_scenario_simulator', 'head_controler_fix'))
+    head_controler_fix_node = launch.launch(roslaunch.core.Node('arm_scenario_simulator', 'head_controller_fix'))
 
-    def clean():
-        head_controler_fix_node.close()
+    def clean_up():
+        head_controler_fix_node.stop()
         launch.stop()
-    rospy.on_shutdown(clean)
-
-    Head.set_pan_speed = set_pan_speed #attach a new method to Head class
+    rospy.on_shutdown(clean_up)

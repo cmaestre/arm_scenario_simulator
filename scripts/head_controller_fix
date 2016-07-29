@@ -14,12 +14,12 @@ class head_controler_fix:
     def __init__(self):
         self._state = dict()
         self.target = 0.0
-        self.speed = 0.5
+        self.speed = 1.0
         rospy.Subscriber('/robot/head/command_head_pan_simulator_fix', HeadPanCommand, self._on_pan_cmd)
         rospy.Subscriber('/robot/head/head_state', HeadState, self._on_head_state)
         pub_pan = rospy.Publisher('/robot/head/command_head_pan', HeadPanCommand, queue_size=10)
 
-        eps = 0.02 #
+        eps = 0.01 #
         rate_frequency = 5
         rate = rospy.Rate(rate_frequency)
 
@@ -27,14 +27,15 @@ class head_controler_fix:
             last_time = time.time()
             rate.sleep()
             if 'pan' not in self._state.keys(): continue
-            #if self._state['pan']>0.9: self.target = 0
-            #if self._state['pan']<0.1: self.target = 1.0
+            #if self.target==0: self.target = -1.0
+            #if self._state['pan']>0.9: self.target = -1.0
+            #if self._state['pan']<-0.9: self.target = 1.0
 
             diff = self.target-self._state['pan']
             if abs(diff)>eps:
                 delta = math.copysign(self.speed/rate_frequency, diff)
                 if abs(delta)>abs(diff): delta = diff
-                coeff = 3 if abs(diff)>2*abs(delta) else 1
+                coeff = 3 if abs(diff)>3*abs(delta) else (2 if abs(diff)>2*abs(delta) else 1)
                 target = self._state['pan']+ coeff*delta
 
                 print('current : '+str(self._state['pan'])+'  /  target : '+str(target))
@@ -46,6 +47,7 @@ class head_controler_fix:
 
     def _on_pan_cmd(self, msg):
         self.target = msg.target
+        rospy.loginfo('Setting target to : '+str(self.target))
         self.speed = abs(msg.speed_ratio)
 
     def _on_head_state(self, msg):
