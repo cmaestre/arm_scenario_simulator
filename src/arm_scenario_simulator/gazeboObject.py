@@ -2,27 +2,50 @@ import rospy
 import rospkg
 rospack = rospkg.RosPack()
 
-from gazebo_msgs.srv import (
-    SpawnModel,
-    DeleteModel,
-)
-
-from geometry_msgs.msg import (
-    Pose,
-    Point,
-    Quaternion
-)
 from std_msgs.msg import ColorRGBA
+from geometry_msgs.msg import Pose, Point, Quaternion, Twist
+from gazebo_msgs.srv import SpawnModel, DeleteModel, GetModelState, SetModelState
+from gazebo_msgs.msg import ModelState
+
 from arm_scenario_simulator.msg import MaterialColor
 from .parameters import COLOR_TYPE
 
 import xml.etree.ElementTree as ET
 
+def spawn_sdf(gazebo_name, path_to_sdf, position, orientation, static):
+    try:
+        with open (path_to_sdf, "r") as f:
+            xml=f.read().replace('\n', '')
+        if static:
+            root = ET.fromstring(xml) #parse the xml and retrieve the root element (sdf tag)*
+            static_tag = ET.Element(tag='static')
+            static_tag.text='true'
+            root.find('model').append(static_tag) # find the model tag and insert a static child
+            xml = ET.tostring(root) # get the new xml
+            print(xml)
+
+        GazeboObject.spawn_sdf_srv.wait_for_service()
+        resp_spawn = GazeboObject.spawn_sdf_srv(gazebo_name, xml, "/", Pose(position=position, orientation=orientation), "world")
+        if resp_spawn.success:
+            rospy.loginfo("creation of "+ gazebo_name + " successful")
+            return True
+        else:
+            rospy.logerr("Could not spawn "+path_to_sdf+" (from "+path_to_sdf+"), status : "+resp_spawn.status)
+            return False
+    except Exception as e:
+        rospy.logerr("Could not spawn "+path_to_sdf+" (from "+path_to_sdf+")" )
+        rospy.logerr(e)
+        return False
+
+
 class GazeboObject:
     models_path = rospack.get_path('arm_scenario_simulator')+'/models/'
     spawn_sdf_srv = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
     delete_model_srv = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
-    colorable_links = ['link']
+    get_model_state_srv = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
+    set_model_state_srv = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
+    colorable_links = ['link'] # this is the base list of colorable links in a model. Specialized classes may override this class attribute to allow the user to change links color
+
 
     def __init__(self, gazebo_name):
         self.gazebo_name = gazebo_name
@@ -31,44 +54,59 @@ class GazeboObject:
         self.color_publishers = {}
         self.make_publishers()
 
+
     def make_publishers(self):
         for link in self.colorable_links:
             self.color_publishers[link] = rospy.Publisher('/'+self.gazebo_name+'/'+link+'/visual/set_color', MaterialColor, queue_size=1)
 
-    def spawn(self, type_name, position, orientation = None, static = False):
-        try:
-            path_to_sdf = GazeboObject.models_path + type_name +'/model.sdf'
-            with open (path_to_sdf, "r") as f:
-                xml=f.read().replace('\n', '')
-            if static:
-                root = ET.fromstring(xml) #parse the xml and retrieve the root element (sdf tag)*
-                static_tag = ET.Element(tag='static')
-                static_tag.text='true'
-                root.find('model').append(static_tag) # find the model tag and insert a static child
-                xml = ET.tostring(root) # get the new xml
-                print(xml)
 
-            rospy.wait_for_service('/gazebo/spawn_sdf_model')
-            resp_sdf = GazeboObject.spawn_sdf_srv(self.gazebo_name, xml, "/", Pose(position=position, orientation=orientation), "world")
-            rospy.loginfo("creation of "+ self.gazebo_name + " ("+type_name+") successful")
+    def spawn(self, model_name, position, orientation = None, static = False):
+        path_to_sdf = GazeboObject.models_path + model_name +'/model.sdf'
+        if spawn_sdf(self.gazebo_name, path_to_sdf, position, orientation, static):
             self.spawned = True
             return self
-        except Exception as e:
-            rospy.loginfo("Could not spawn "+ type_name)
-            rospy.loginfo(e)
-            return None
+
 
     def delete(self):
         if not self.spawned: return
         try:
             rospy.loginfo("Deleting "+self.gazebo_name)
+            GazeboObject.delete_model_srv.wait_for_service()
             resp_delete = GazeboObject.delete_model_srv(self.gazebo_name)
             self.spawned = False
-        except rospy.ServiceException, e: pass # Don't know why, but an exception is raised by ROS whereas the deletion is actually successful ... So ignore the exception
+        except rospy.ServiceException, e: 
+            pass # Don't know why, but an exception is raised by ROS whereas the deletion is actually successful ... So ignore the exception
 
-    def set_pose(self, position, orientation = None):
-        rospy.loginfo("GazeboObject.set_pose is not implemented yet.")
-        pass
+
+    def set_state(self, position, orientation=None, linear_twist=None, angular_twist=None, reference_frame="world"):
+        '''GazeboObject.set_state(self, position, orientation=None, linear_twist=None, angular_twist=None, reference_frame="world")
+        
+        Set the state (pose + twist) of the objects according to the given reference_frame
+        If an element is omitted, the current value is conserved.
+        '''
+        message = ModelState(self.gazebo_name, Pose(position, orientation), Twist(linear_twist, angular_twist), reference_frame)
+        if not(orientation and linear_twist and angular_twist):
+            current_state = self.get_state(reference_frame)
+            if not orientation: message.pose.orientation = current_state.pose.orientation
+            if not linear_twist: message.twist.linear = current_state.twist.linear
+            if not angular_twist: message.twist.angular = current_state.twist.angular
+        GazeboObject.set_model_state_srv.wait_for_service()
+        resp_set = GazeboObject.set_model_state_srv(message)
+        if not resp_set.success: rospy.logerr("Could not set state of "+self.gazebo_name+" , status : "+resp_set.status) 
+
+
+    def get_state(self, reference_frame="world"):
+        '''GazeboObject.get_state(self, reference_frame="world")
+        
+        Retrieves the state (pose + twist) of the objects according to the given reference_frame
+        A pose is made of a position and orintation.
+        A twist is made of a linear twist and angular twist.
+        '''
+        GazeboObject.get_model_state_srv.wait_for_service()
+        resp_get = GazeboObject.get_model_state_srv(self.gazebo_name, reference_frame)
+        if not resp_get.success: rospy.logerr("Could not get state of "+self.gazebo_name+" , status : "+resp_get.status)
+        else: return resp_get
+
 
     def set_color(self, rgba, link="link", ambient_coeff=0.7, specular_coeff=0.7):
         rgba = list(rgba)
@@ -81,6 +119,7 @@ class GazeboObject:
         message.color.append(ColorRGBA(0.7*r/self.color_range, 0.7*g/self.color_range, 0.7*b/self.color_range, a/self.color_range))
         message.color.append(ColorRGBA(1-specular_coeff*(1-r/self.color_range), 1-specular_coeff*(1-g/self.color_range), 1-specular_coeff*(1-b/self.color_range), a/self.color_range))
         self.color_publishers[link].publish(message)
+
 
     def set_color_range(self,R):
         self.color_range = float(R)

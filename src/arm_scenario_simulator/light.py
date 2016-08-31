@@ -26,17 +26,20 @@ class Light(GazeboObject):
         self.color = ColorRGBA(color[0]/self.color_range, color[1]/self.color_range, color[2]/self.color_range, color[3]/self.color_range)
         if self.color != previous_color and self._on : self._send_color_cmd(self.color)
 
+    def is_on(self):
+        return self._on
+
     def turn_on(self, force = False):
-        self.set_state(True, force = force)
+        self.set_light_state(True, force = force)
 
     def turn_off(self, force = False):
-        self.set_state(False, force = force)
+        self.set_light_state(False, force = force)
 
     def set_on(self, on):
-        rospy.loginfo("DEPRECATED : recommended to use set_state instead")
-        self.set_state(on)
+        rospy.loginfo("DEPRECATED : recommended to use set_light_state instead")
+        self.set_light_state(on)
 
-    def set_state(self, on, color=None, force = False):
+    def set_light_state(self, on, color=None, force = False):
         if color is not None: self.set_color(color)
         if self._on!=on or force:
             color = self.color if on else Light.off_color

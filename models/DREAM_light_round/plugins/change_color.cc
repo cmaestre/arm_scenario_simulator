@@ -39,7 +39,7 @@ namespace gazebo
 
       boost::regex re("::");
       std::string name = regex_replace(this->visual->GetName(), re, "/");
-      //std::cout << "name : " << name << std::endl;
+      //std::cout << "Suscribed to topic named : " << name << std::endl;
       // Create our ROS node. This acts in a similar manner to the Gazebo node
       this->rosNode = new ros::NodeHandle(name);
       this->rosSub = this->rosNode->subscribe("set_color", 1, &ChangeColor::colorCallback, this);

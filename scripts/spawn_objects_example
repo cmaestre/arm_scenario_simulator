@@ -5,6 +5,7 @@ import sys
 import os
 import copy
 import math
+import random
 
 import rospy
 import arm_scenario_simulator as arm_sim
@@ -20,27 +21,28 @@ def axis_to_quat(axis, angle):
 class Environment:
 
     def __init__(self):
+        self.objects = {}
         rospy.Subscriber('/environment/reset', Empty, self.reset_callback, queue_size = 1)
 
     def reset_callback(self, message):
         self.del_objects()
         self.init()
 
-    def add_object(self, obj):
-        self.objects[obj.gazebo_name] = obj
-
     def del_objects(self):
-        for obj in self.objects.keys(): self.objects[obj].delete()
+        for obj in self.objects.keys(): 
+            self.objects[obj].delete()
+        
+
+    def add_object(self, obj):
+        if obj: self.objects[obj.gazebo_name] = obj
 
     def init(self):
         ''' Create handles to (and spawn) simulated object in Gazebo'''
-        self.objects = {}
-
         self.add_object( arm_sim.Button('button1').spawn( Point(x=0.5, y=0.1, z=0.76) ) )
         self.add_object( arm_sim.Lever('lever1').spawn( Point(x=0.7, y=0.6, z=0.76), orientation=axis_to_quat([0,0,1], math.pi/4) ) )
 
-        self.add_object( arm_sim.GazeboObject('cube1').spawn(   'DREAM_cube',      Point(x=0.5, y=0.55, z=0.78) ))
-        self.add_object( arm_sim.GazeboObject('cube2').spawn(   'DREAM_cube',      Point(x=0.4, y=0.2, z=0.78) ))
+        self.add_object( arm_sim.GazeboObject('cube1').spawn(    'DREAM_cube',      Point(x=0.5, y=0.55, z=0.78) ))
+        self.add_object( arm_sim.GazeboObject('cube2').spawn(    'DREAM_cube',      Point(x=0.4, y=0.2, z=0.78) ))
         self.add_object( arm_sim.GazeboObject('cylinder1').spawn('DREAM_cylinder',  Point(x=0.75, y=0.05, z=0.79) ))
         self.add_object( arm_sim.GazeboObject('cylinder2').spawn('DREAM_cylinder',  Point(x=0.45, y=0.35, z=0.79) ))
 
@@ -53,9 +55,9 @@ class Environment:
         # to let the publishers notify the master, so that the following commands are not discarded
         rospy.sleep(1)
         # Initialize objects attributes (color) and lights states
-        self.objects['light_table0'].set_state(on = False, force = True) # force=True ensures sending a ros message to gazebo to set the gazebo_object's color, no matter what the current python object state is
-        self.objects['light_table1'].set_state(on = False, force = True) # when force is False or ommited, the python object only publish a ros message if it considers it is necessary
-        self.objects['light_table2'].set_state(on = False, force = True) # it is recommended to force at initialization time to ensure having a consistent state
+        self.objects['light_table0'].set_light_state(on = False, force = True) # force=True ensures sending a ros message to gazebo to set the gazebo_object's color, no matter what the current python object state is
+        self.objects['light_table1'].set_light_state(on = False, force = True) # when force is False or ommited, the python object only publish a ros message if it considers it is necessary
+        self.objects['light_table2'].set_light_state(on = False, force = True) # it is recommended to force at initialization time to ensure having a consistent state
 
         self.objects['button1'].set_base_color(rgba = [30,20,220])
         self.objects['button1'].set_button_color(rgba = [100,80,250])
@@ -79,17 +81,23 @@ class Environment:
         objects = self.objects
 
         # Basic association : a light is on only and only if a button is pressed
-        objects['light_table0'].set_state( objects['button1'].is_pressed() )
+        objects['light_table0'].set_light_state( objects['button1'].is_pressed() )
 
-        # Complex association : a light is on if one of two object is active, and the color depdend on a third object !
-        light1_condition = objects['table/pocket'].is_active() or objects['button1'].is_pressed()
-        light1_color = [255,126,80] if objects['lever1'].is_pushed() else [20,126,255]
-        objects['light_table1'].set_state(on=light1_condition, color=light1_color)
+        # Complex association : a light is on if one of two objects is active, and the color depdend on a third object !
+        light1_condition = objects['table/pocket'].is_active() or objects['lever1'].is_pushed()
+        light1_color = [255,126,80] if objects['button1'].is_pressed() else [20,126,255]
+        objects['light_table1'].set_light_state(on=light1_condition, color=light1_color)
 
         # Complex association : a light is turned on by a particular event, and turned off by another one
-        if objects['lever1'].is_pushed(): objects['light_table2'].turn_on()
-        if objects['button1'].is_pressed(): objects['light_table2'].turn_off()
+        if objects['button1'].is_pressed() and objects['light_table2'].is_on(): 
+            objects['cube1'].set_state(position = Point(x=0.7, y=0.5*random.random(), z=0.85))
+            objects['light_table2'].turn_off()
+        elif hasattr(self,'previous_lever_pushed') and self.previous_lever_pushed != objects['lever1'].is_pushed(): 
+            objects['light_table2'].turn_on()
+        self.previous_lever_pushed = objects['lever1'].is_pushed()
 
+        # to access an objects pose : 
+        # objects[name].get_state().pose
 
 
 def main():
@@ -97,13 +105,14 @@ def main():
     env = Environment()
     try:
         env.init()
-        env.run()
+        rospy.on_shutdown(env.del_objects)
         print("Running. Ctrl-c to quit")
-    except Exception:
+        env.run()
+    except Exception: 
         env.del_objects()
         raise
 
 
 if __name__ == '__main__':
     try: main()
-    except rospy.ROSInterruptException,e : pass
+    except rospy.ROSInterruptException: pass
