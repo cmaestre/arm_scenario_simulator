@@ -1,4 +1,14 @@
-##To install :
+# Introduction
+
+This package was made to allow people make developmental robotic experiment simulations in Gazebo, with Baxter or any other robots.
+It includes the models and python wrappers for several objects, some of them are interactive or contains sensors.
+
+This allows to create simple environments where a robot can perform actions having different consequences (turning on a light, moving a cube, ...).
+This way one can test algorithms for policy learning, curiosity, ...
+
+# How to
+
+## Install :
 0. First make sure you have installed:
     1. ROS indigo (full desktop install, http://wiki.ros.org/indigo/Installation/Ubuntu)
     2. Baxter Simulator (http://sdk.rethinkrobotics.com/wiki/Simulator_Installation)
@@ -6,7 +16,7 @@
 2. In the catkin_ws folder, run ```catkin_make```.
 
 
-##To run :
+## Run :
 1. Start by executing ```./baxter.sh sim``` while in the catkin_ws to be able to use Baxter
 2. Move to the arm_scenario_simulator package (```roscd arm_scenario_simulator```) and source setup.sh : ```source setup.sh```
 3. The scenario's environment can then be laucnhed by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
@@ -14,7 +24,7 @@
 
 ![gazebo.png](https://bitbucket.org/repo/GLdKKe/images/874311045-gazebo.png)
 
-## Basic setup
+### Basic setup
 Launching the world `baxter_world.launch` will start a ros master, gazebo and spawn:
 
 - baxter robot with all its original sensors and actuators (cameras, grippers, lasers ...)
@@ -29,7 +39,7 @@ In addition to the 3 original cameras coming with Baxter (head_camera, left and 
 
 An snapshot of head_camera_2 shown. A gaussian noise has been added to the image for more realism.
 
-## Additional objects
+### Additional objects
 
 In addition to this basic setup, the arm_scenario_simulator comes with objects that can be spawned or removed as you wish:
 
@@ -38,10 +48,11 @@ In addition to this basic setup, the arm_scenario_simulator comes with objects t
 - lights
 - cubes and cylinders
 
-All these objects can be spawned and deleted directly from python code, allowing you to automate experiment initialization : no need to write one `.world` file for each experiment setup you want, just write a python script to spawn a variable amount of objects at different positions on the table or to reset the setup, etc ...
+All these objects can be spawned and deleted directly from python code, allowing you to automate experiments initialization : no need to write one `.world` file for each experiment setup you want, just write a python script to spawn a variable amount of objects at different positions on the table or to reset the setup, etc ...
 
-The state of buttons, levers and the table's pocket can also be retrieved easily from python code, and the lights can be switched on/off directly from python as well. This enables you to define simple or complex rules relating objects states and lights (e.g, turn on light2 iif this buttonC in pressed).
-You can set the color of all these objects in python too.
+The state of buttons, levers and the table's pocket can also be retrieved easily from python code, and the lights can be switched on/off directly from python as well. This enables you to define simple or complex rules relating objects states and lights (e.g, turn on light2 iif this buttonC in pressed, more examples in the file linked few lines below).
+
+You can set the color of all these objects, and get/set their physical state (position and velocity) in python too.
 
 All this is made possible using the python classes contained in the python [arm_scenario_simulator package](https://bitbucket.org/u2isir/arm_scenario_simulator/src/8d92c844061e778f5237e0dc58fe971463a7594d/src/arm_scenario_simulator/?at=master).
 
@@ -50,8 +61,10 @@ The example script [spawn_objects_example](https://bitbucket.org/u2isir/arm_scen
 **Important note : color changes made at run-time with python or c++ code are only visible through cameras (therefore using rviz or image_view package), not in gazebo's window client.**
 
 
-## How to control Baxter
+## Control Baxter
 Please refer to rethink Robotics' [examples](https://github.com/RethinkRobotics/baxter_examples) and [python api for baxter's arms](http://api.rethinkrobotics.com/baxter_interface/html/index.html)
+
+# Road map
 
 ## Already done : 
 * A table with a pocket and a sensor publishing (on a ROS topic) whether there is an object inside the pocket or not.
@@ -64,7 +77,7 @@ Please refer to rethink Robotics' [examples](https://github.com/RethinkRobotics/
 ## To do :
 * Improve textures of table
 
-## About simulating faster than real time :
+# About simulating faster than real time :
 
 To my knowledge, it is possible to speed up the simulation of the physics engine by editing the file worlds/setup.world in two ways :
 
