@@ -1,7 +1,7 @@
 # Introduction
 
 This package was made to allow people make developmental robotic experiment simulations in Gazebo, with Baxter or any other robots having an arm (necessary to interact with the world).
-It includes the models and python wrappers for several Gazebo objects, some of them are interactive or contains sensors.
+It includes the models and python wrappers for several Gazebo objects, some of them are interactive or contain sensors.
 
 This allows to create simple environments where a robot can perform actions (pushing a button, putting something in a pocket, pushing a lever) having different consequences (turning on a light, moving an object).
 This way one can test algorithms for policy learning, curiosity, ...
