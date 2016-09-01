@@ -59,6 +59,7 @@ You can set the color of all these objects, and get/set their physical state (po
 All this is made possible using the python classes contained in the python [arm_scenario_simulator package](https://bitbucket.org/u2isir/arm_scenario_simulator/src/8d92c844061e778f5237e0dc58fe971463a7594d/src/arm_scenario_simulator/?at=master).
 
 The example script [spawn_objects_example](https://bitbucket.org/u2isir/arm_scenario_simulator/src/1685739a91dc1a0840ca1bd89dc1bc6fcdefdd0f/scripts/spawn_objects_example?at=master&fileviewer=file-view-default) aims at demonstrating how to do this.
+**This serves as a tuto to demonstrate how this package works/can be used**
 
 **Important note : color changes made at run-time with python or c++ code are only visible through cameras (therefore using rviz or image_view package), not in gazebo's window client.**
 
