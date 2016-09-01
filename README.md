@@ -1,10 +1,12 @@
 # Introduction
 
-This package was made to allow people make developmental robotic experiment simulations in Gazebo, with Baxter or any other robots.
-It includes the models and python wrappers for several objects, some of them are interactive or contains sensors.
+This package was made to allow people make developmental robotic experiment simulations in Gazebo, with Baxter or any other robots having an arm (necessary to interact with the world).
+It includes the models and python wrappers for several Gazebo objects, some of them are interactive or contains sensors.
 
-This allows to create simple environments where a robot can perform actions having different consequences (turning on a light, moving a cube, ...).
+This allows to create simple environments where a robot can perform actions (pushing a button, putting something in a pocket, pushing a lever) having different consequences (turning on a light, moving an object).
 This way one can test algorithms for policy learning, curiosity, ...
+
+The package comes with an example demonstrating Baxter.
 
 # How to
 
@@ -19,7 +21,7 @@ This way one can test algorithms for policy learning, curiosity, ...
 ## Run :
 1. Start by executing ```./baxter.sh sim``` while in the catkin_ws to be able to use Baxter
 2. Move to the arm_scenario_simulator package (```roscd arm_scenario_simulator```) and source setup.sh : ```source setup.sh```
-3. The scenario's environment can then be laucnhed by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
+3. The example environment can then be laucnhed by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
 4. Then some objects can be spwaned on the table by executing ```rosrun arm_scenario_simulator spawn_objects_example``` resulting in something like this :
 
 ![gazebo.png](https://bitbucket.org/repo/GLdKKe/images/874311045-gazebo.png)
@@ -27,11 +29,11 @@ This way one can test algorithms for policy learning, curiosity, ...
 ### Basic setup
 Launching the world `baxter_world.launch` will start a ros master, gazebo and spawn:
 
-- baxter robot with all its original sensors and actuators (cameras, grippers, lasers ...)
-- a table with borders and a pocket with a presence sensor
-- three lights fixed to the table
+- baxter robot with all its original sensors and actuators (cameras, grippers, lasers ...) (defined in this package, mainly copied from baxter_gazebo package)
+- a table with borders and a pocket with a presence sensor (defined in this package)
+- three lights fixed to the table (defined in this package)
 
-In addition to the 3 original cameras coming with Baxter (head_camera, left and right hand_camera), a camera called "head_camera_2"has been added on Baxter's head, as the capture belows shows. This new camera, unlike the original head_camera, entirely captures the table.
+*Note :* In addition to the 3 original cameras coming with Baxter (head_camera, left and right hand_camera), a camera called "head_camera_2"has been added on Baxter's head, as the capture belows shows. This new camera, unlike the original head_camera, entirely captures the table.
 
 ![topics2.png](https://bitbucket.org/repo/GLdKKe/images/655402798-topics2.png)
 
@@ -41,14 +43,14 @@ An snapshot of head_camera_2 shown. A gaussian noise has been added to the image
 
 ### Additional objects
 
-In addition to this basic setup, the arm_scenario_simulator comes with objects that can be spawned or removed as you wish:
+In addition to this basic setup, the arm_scenario_simulator comes with other objects:
 
 - buttons
 - levers
 - lights
 - cubes and cylinders
 
-All these objects can be spawned and deleted directly from python code, allowing you to automate experiments initialization : no need to write one `.world` file for each experiment setup you want, just write a python script to spawn a variable amount of objects at different positions on the table or to reset the setup, etc ...
+All these objects can be spawned, moved and deleted directly from python code, allowing you to automate experiments initialization : no need to write one `.world` file for each experiment setup you want, just write a python script to spawn a variable amount of objects at different positions on the table or to reset the setup, etc ...
 
 The state of buttons, levers and the table's pocket can also be retrieved easily from python code, and the lights can be switched on/off directly from python as well. This enables you to define simple or complex rules relating objects states and lights (e.g, turn on light2 iif this buttonC in pressed, more examples in the file linked few lines below).
 
@@ -77,7 +79,7 @@ Please refer to rethink Robotics' [examples](https://github.com/RethinkRobotics/
 ## To do :
 * Improve textures of table
 
-# About simulating faster than real time :
+# About simulating faster than real time with Gazebo :
 
 To my knowledge, it is possible to speed up the simulation of the physics engine by editing the file worlds/setup.world in two ways :
 
