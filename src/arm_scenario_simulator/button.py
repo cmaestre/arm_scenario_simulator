@@ -1,7 +1,7 @@
 import rospy
 from .gazeboObject import GazeboObject
 from std_msgs.msg import ColorRGBA, Int8
-from arm_scenario_simulator.msg import MaterialColor
+from arm_scenario_simulator.msg import MaterialColor, Int8Stamped
 from .parameters import COLOR_TYPE
 
 class Button(GazeboObject):
@@ -10,7 +10,7 @@ class Button(GazeboObject):
     def __init__(self, name):
         GazeboObject.__init__(self, name)
         self._pressed = False
-        rospy.Subscriber("/"+name+"/is_pressed", Int8, self.update_state)
+        rospy.Subscriber("/"+name+"/is_pressed", Int8Stamped, self.update_state)
 
     def spawn(self, position, orientation = None, **extra):
         return GazeboObject.spawn(self, 'DREAM_push_button', position, orientation, **extra)

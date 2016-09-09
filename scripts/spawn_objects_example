@@ -30,8 +30,7 @@ class Environment:
 
     def del_objects(self):
         for obj in self.objects.keys(): 
-            self.objects[obj].delete()
-        
+            self.objects[obj].delete()        
 
     def add_object(self, obj):
         if obj: self.objects[obj.gazebo_name] = obj

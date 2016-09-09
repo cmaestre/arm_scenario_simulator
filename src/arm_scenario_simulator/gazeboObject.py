@@ -30,7 +30,7 @@ def spawn_sdf(gazebo_name, path_to_sdf, position, orientation, static):
             rospy.loginfo("creation of "+ gazebo_name + " successful")
             return True
         else:
-            rospy.logerr("Could not spawn "+path_to_sdf+" (from "+path_to_sdf+"), status : "+resp_spawn.status)
+            rospy.logerr("Could not spawn "+path_to_sdf+" (from "+path_to_sdf+"), status : "+resp_spawn.status_message)
             return False
     except Exception as e:
         rospy.logerr("Could not spawn "+path_to_sdf+" (from "+path_to_sdf+")" )
@@ -92,7 +92,7 @@ class GazeboObject:
             if not angular_twist: message.twist.angular = current_state.twist.angular
         GazeboObject.set_model_state_srv.wait_for_service()
         resp_set = GazeboObject.set_model_state_srv(message)
-        if not resp_set.success: rospy.logerr("Could not set state of "+self.gazebo_name+" , status : "+resp_set.status) 
+        if not resp_set.success: rospy.logerr("Could not set state of "+self.gazebo_name+" , status : "+resp_set.status_message) 
 
 
     def get_state(self, reference_frame="world"):
@@ -104,7 +104,7 @@ class GazeboObject:
         '''
         GazeboObject.get_model_state_srv.wait_for_service()
         resp_get = GazeboObject.get_model_state_srv(self.gazebo_name, reference_frame)
-        if not resp_get.success: rospy.logerr("Could not get state of "+self.gazebo_name+" , status : "+resp_get.status)
+        if not resp_get.success: rospy.logerr("Could not get state of "+self.gazebo_name+" , status : "+resp_get.status_message)
         else: return resp_get
 
 

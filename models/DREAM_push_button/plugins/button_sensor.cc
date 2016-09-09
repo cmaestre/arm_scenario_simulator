@@ -9,7 +9,7 @@
 #include "gazebo/msgs/msgs.hh"
 
 #include "ros/ros.h"
-#include "std_msgs/Int8.h"
+#include "arm_scenario_simulator/Int8Stamped.h"
 
 namespace gazebo
 {
@@ -42,7 +42,7 @@ namespace gazebo
         ros::init(argc, argv, "gazebo_client", ros::init_options::NoSigintHandler);
       }
       // Spin up the queue helper thread.
-      this->rosPub = this->rosNode.advertise<std_msgs::Int8>(this->model->GetName()+"/is_pressed", 1);
+      this->rosPub = this->rosNode.advertise<arm_scenario_simulator::Int8Stamped>(this->model->GetName()+"/is_pressed", 1);
     }
 
     // Called by the world update start event
@@ -56,7 +56,9 @@ namespace gazebo
       message.set_data(value);
       this->pressed_publisher->Publish(message);
 
-      std_msgs::Int8 ros_message; // ros message
+      arm_scenario_simulator::Int8Stamped ros_message; // ros message
+      ros_message.header.stamp = ros::Time::now();
+      ros_message.header.seq++;
       ros_message.data = value;
       this->rosPub.publish(ros_message);
     }

@@ -48,6 +48,7 @@ catkin_python_setup()
 add_message_files(
   FILES
   MaterialColor.msg
+  Int8Stamped.msg
 )
 
 ## Generate services in the 'srv' folder
