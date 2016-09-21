@@ -21,11 +21,13 @@ The package comes with an example demonstrating Baxter.
 
 ## Run :
 Every ROS node using Baxter should be run from a terminal in which the following step has been followed:
-1. move to the directory ~/catkin_ws (or ~/ros_ws) and execute ```./baxter.sh sim```
+
+* move to the directory ~/catkin_ws (or ~/ros_ws) and execute ```./baxter.sh sim```
 
 Then you can launch your nodes. As an example :
-2. The example environment can then be launched by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
-3. Then some objects can be spawned on the table by executing ```rosrun arm_scenario_simulator spawn_objects_example``` resulting in something like this :
+
+* The example environment can then be launched by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
+* Then some objects can be spawned on the table by executing ```rosrun arm_scenario_simulator spawn_objects_example``` resulting in something like this :
 
 ![gazebo.png](https://bitbucket.org/repo/GLdKKe/images/874311045-gazebo.png)
 
