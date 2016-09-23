@@ -14,22 +14,27 @@ The package comes with an example demonstrating Baxter.
 0. First make sure you have installed:
     1. ROS indigo (full desktop install, http://wiki.ros.org/indigo/Installation/Ubuntu)
     2. Baxter Simulator (http://sdk.rethinkrobotics.com/wiki/Simulator_Installation)
-1. clone this repostiory into your catkin workspace "src" folder
+1. clone this repository into your catkin workspace "src" folder
 2. In the catkin_ws folder, run ```catkin_make```.
+3. Add the following line to your favorite shell rc file (e.g ~/.bashrc) ```export GAZEBO_MODEL_PATH=$(rospack find arm_scenario_simulator)/models:$GAZEBO_MODEL_PATH ```
 
 
 ## Run :
-1. Start by executing ```./baxter.sh sim``` while in the catkin_ws to be able to use Baxter
-2. Move to the arm_scenario_simulator package (```roscd arm_scenario_simulator```) and source setup.sh : ```source setup.sh```
-3. The example environment can then be laucnhed by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
-4. Then some objects can be spwaned on the table by executing ```rosrun arm_scenario_simulator spawn_objects_example``` resulting in something like this :
+Every ROS node using Baxter should be run from a terminal in which the following step has been followed:
+
+* move to the directory ~/catkin_ws (or ~/ros_ws) and execute ```./baxter.sh sim```
+
+Then you can launch your nodes. As an example :
+
+* The example environment can then be launched by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
+* Then some objects can be spawned on the table by executing ```rosrun arm_scenario_simulator spawn_objects_example``` resulting in something like this :
 
 ![gazebo.png](https://bitbucket.org/repo/GLdKKe/images/874311045-gazebo.png)
 
 ### Basic setup
 Launching the world `baxter_world.launch` will start a ros master, gazebo and spawn:
 
-- baxter robot with all its original sensors and actuators (cameras, grippers, lasers ...) (defined in this package, mainly copied from baxter_gazebo package)
+- Baxter robot with all its original sensors and actuators (cameras, grippers, lasers ...) (defined in this package, mainly copied from baxter_gazebo package)
 - a table with borders and a pocket with a presence sensor (defined in this package)
 - three lights fixed to the table (defined in this package)
 
@@ -39,7 +44,7 @@ Launching the world `baxter_world.launch` will start a ros master, gazebo and sp
 
 ![pov.png](https://bitbucket.org/repo/GLdKKe/images/2147259962-pov.png)
 
-An snapshot of head_camera_2 shown. A gaussian noise has been added to the image for more realism.
+An snapshot of head_camera_2 shown. A Gaussian noise has been added to the image for more realism.
 
 ### Additional objects
 
@@ -65,7 +70,7 @@ The example script [spawn_objects_example](https://bitbucket.org/u2isir/arm_scen
 
 
 ## Control Baxter
-Please refer to rethink Robotics' [examples](https://github.com/RethinkRobotics/baxter_examples) and [python api for baxter's arms](http://api.rethinkrobotics.com/baxter_interface/html/index.html)
+Please refer to rethink Robotics' [examples](https://github.com/RethinkRobotics/baxter_examples) and [python api for Baxter's arms](http://api.rethinkrobotics.com/baxter_interface/html/index.html)
 
 # Road map
 
