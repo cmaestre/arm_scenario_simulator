@@ -104,7 +104,7 @@ class GazeboObject:
         '''
         GazeboObject.get_model_state_srv.wait_for_service()
         resp_get = GazeboObject.get_model_state_srv(self.gazebo_name, reference_frame)
-        if not resp_get.success: rospy.logerr("Could not get state of "+self.gazebo_name+" , status : "+resp_get.status_message)
+        if not resp_get.success: raise Exception("Could not get state of "+self.gazebo_name+" , status : "+resp_get.status_message)
         else: return resp_get
 
 
