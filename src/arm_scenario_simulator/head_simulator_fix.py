@@ -32,7 +32,7 @@ except rospy.ROSException: # if not, it is probably cause we're using the simula
 
 
     try: # look if the node already exists
-        rospy.wait_for_service('/head_controller_simulator_fix', 5.0)
+        rospy.wait_for_service('/head_controller_simulator_fix', 2.0)
     except:
         path = os.path.join(os.path.dirname(__file__), 'head_controller_simulator_fix')
         head_controler_fix_node = subprocess.Popen(['python', path])

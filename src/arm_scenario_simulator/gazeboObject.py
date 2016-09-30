@@ -1,3 +1,4 @@
+import os
 import rospy
 import rospkg
 rospack = rospkg.RosPack()
@@ -38,8 +39,13 @@ def spawn_sdf(gazebo_name, path_to_sdf, position, orientation, static):
         return False
 
 
+
 class GazeboObject:
-    models_path = rospack.get_path('arm_scenario_simulator')+'/models/'
+    models_paths = []
+    try: models_paths = os.environ['GAZEBO_MODEL_PATH'].split(':')
+    except: pass
+    models_paths = [os.path.join(os.environ['HOME'],'.gazebo','models')]+models_paths
+    
     spawn_sdf_srv = rospy.ServiceProxy('/gazebo/spawn_sdf_model', SpawnModel)
     delete_model_srv = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
     get_model_state_srv = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
@@ -58,10 +64,17 @@ class GazeboObject:
     def make_publishers(self):
         for link in self.colorable_links:
             self.color_publishers[link] = rospy.Publisher('/'+self.gazebo_name+'/'+link+'/visual/set_color', MaterialColor, queue_size=1)
+            
+    def resolve_model_path(self, model_name):
+        for direc in GazeboObject.models_paths:
+            attempt = os.path.join(direc, model_name)
+            if os.path.isdir(attempt): return attempt
+        raise Exception('Model directory not found for '+model_name+'. Searched in the following directories ($GAZEBO_MODEL_PATH) : \n'+('\n'.join(GazeboObject.models_paths)) )
 
 
     def spawn(self, model_name, position, orientation = None, static = False):
-        path_to_sdf = GazeboObject.models_path + model_name +'/model.sdf'
+        path_to_sdf = self.resolve_model_path(model_name)+'/model.sdf'
+        if not os.path.isfile(path_to_sdf): raise Exception("The model folder does not contain any model.sdf file")
         if spawn_sdf(self.gazebo_name, path_to_sdf, position, orientation, static):
             self.spawned = True
             return self
