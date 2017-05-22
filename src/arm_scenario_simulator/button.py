@@ -10,7 +10,7 @@ class Button(GazeboObject):
     def __init__(self, name):
         GazeboObject.__init__(self, name)
         self._pressed = False
-        rospy.Subscriber("/"+name+"/is_pressed", Int8Stamped, self.update_state)
+        rospy.Subscriber("/"+name+"/is_pressed", Int8Stamped, self.update_state, queue_size=1)
 
     def spawn(self, position, orientation = None, **extra):
         return GazeboObject.spawn(self, 'DREAM_push_button', position, orientation, **extra)
@@ -20,7 +20,7 @@ class Button(GazeboObject):
 
     def is_pressed(self):
         return self._pressed
-
+        
     def set_base_color(self, rgba):
         self.set_color(rgba,'base')
 
