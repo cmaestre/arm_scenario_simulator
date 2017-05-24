@@ -42,14 +42,19 @@ class Environment:
 
     def init(self):
         ''' Create handles to (and spawn) simulated object in Gazebo'''        
-        self.add_object( arm_sim.Lever('lever1').spawn( Point(x=0.5, y=0.6, z=0.76), orientation=axis_to_quat([0,0,1], math.pi/2) ) )
-        self.add_object( arm_sim.Button('button1').spawn( Point(x=0.5, y=0.3, z=0.76) ) )
-        self.add_object( arm_sim.Button('button2').spawn( Point(x=0.5, y=0, z=0.76) ) )
+        self.add_object( arm_sim.Lever('lever1').spawn( 
+            Point(x=0.5, y=0.6, z=0.76), orientation=axis_to_quat([0,0,1], math.pi/2) ) )
+        self.add_object( arm_sim.Button('button1').spawn( 
+            Point(x=0.5, y=0.3, z=0.76) ) )
+        self.add_object( arm_sim.Button('button2').spawn( 
+            Point(x=0.5, y=0, z=0.76) ) )
 
-#        self.add_object( arm_sim.GazeboObject('cube1').spawn(    'DREAM_cube',      Point(x=0.5, y=0.55, z=0.78) ))
-#        self.add_object( arm_sim.GazeboObject('cube2').spawn(    'DREAM_cube',      Point(x=0.4, y=0.2, z=0.78) ))
-#        self.add_object( arm_sim.GazeboObject('cylinder1').spawn('DREAM_cylinder',  Point(x=0.75, y=0.05, z=0.79) ))
-#        self.add_object( arm_sim.GazeboObject('cylinder2').spawn('DREAM_cylinder',  Point(x=0.45, y=0.35, z=0.79) ))
+        self.add_object( arm_sim.GazeboObject('cube1').spawn(
+            'DREAM_cube', Point(x=0.5, y=0.45, z=0.8) ))
+#        self.add_object( arm_sim.GazeboObject('cube2').spawn(
+#            'DREAM_cube', Point(x=0.4, y=0.2, z=0.78) ))
+#        self.add_object( arm_sim.GazeboObject('cylinder1').spawn(
+#            'DREAM_cylinder',  Point(x=0.75, y=0.05, z=0.79) ))
 
         # the following objects are not spawn, cause already present in the world before this script is run
         self.add_object( arm_sim.Pocket('table/pocket') )
@@ -87,27 +92,27 @@ class Environment:
             rate.sleep()
 
     def rules(self):            
-            objects = self.objects
-    
-            objects['light_table0'].set_light_state( objects['lever1'].is_pushed() )
-            
-            if not objects['lever1'].is_pushed():
-                objects['light_table0'].turn_off()
+        objects = self.objects
+
+        objects['light_table0'].set_light_state( objects['lever1'].is_pushed() )
+        
+        if not objects['lever1'].is_pushed():
+            objects['light_table0'].turn_off()
+            objects['light_table1'].turn_off()
+            objects['light_table2'].turn_off()
+        else:  
+            if objects['button1'].is_pressed():
+                objects['light_table1'].turn_on() if not objects['light_table1'].is_on() else \
                 objects['light_table1'].turn_off()
-                objects['light_table2'].turn_off()
-            else:  
-                if objects['button1'].is_pressed():
-                    objects['light_table1'].turn_on() if not objects['light_table1'].is_on() else \
-                    objects['light_table1'].turn_off()
-                    time.sleep(1)
-                    
-                if objects['light_table1'].is_on() and objects['button2'].is_pressed():            
-                    objects['light_table2'].turn_on() if not objects['light_table2'].is_on() else \
-                    objects['light_table2'].turn_off()                
-                    time.sleep(1)
+                time.sleep(1)
+                
+            if objects['light_table1'].is_on() and objects['button2'].is_pressed():            
+                objects['light_table2'].turn_on() if not objects['light_table2'].is_on() else \
+                objects['light_table2'].turn_off()                
+                time.sleep(1)
                     
         # to access an objects pose : 
-        # objects[name].get_state().pose
+#        print(objects['lever1'].get_state().pose)
 
 
 def main():
