@@ -98,6 +98,14 @@
         </axis>
     </joint>
 
+    <joint name="world_joint" type="gearbox">
+        <child>base</child>
+        <parent>world</parent>
+        <axis>
+            <xyz>0 0 0</xyz>
+        </axis>        
+    </joint>      
+
     <plugin name="push_button" filename="libDREAM_button_spring.so"/>
     <plugin name="sensor" filename="libDREAM_button_sensor.so"/>
 
