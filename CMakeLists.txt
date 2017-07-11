@@ -44,19 +44,19 @@ catkin_python_setup()
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
+## Generate services in the 'srv' folder
+add_service_files(
+  FILES
+  GetObjectState.srv
+  RestartWorld.srv
+)
+
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
   MaterialColor.msg
   Int8Stamped.msg
 )
-
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
 
 ## Generate actions in the 'action' folder
 # add_action_files(

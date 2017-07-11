@@ -1,0 +1,7 @@
+string option
+string model_name
+float64 model_pos_x
+float64 model_pos_y
+float64 model_pos_z
+---
+bool success
