@@ -68,6 +68,8 @@ The example script [spawn_objects_example](https://bitbucket.org/u2isir/arm_scen
 
 **Important note : color changes made at run-time with python or c++ code are only visible through cameras (therefore using rviz or image_view package), not in gazebo's window client.**
 
+To run the camera:
+```rosrun image_view image_view image:=/cameras/head_camera_2/image theora```
 
 ## Control Baxter
 Please refer to rethink Robotics' [examples](https://github.com/RethinkRobotics/baxter_examples) and [python api for Baxter's arms](http://api.rethinkrobotics.com/baxter_interface/html/index.html)
