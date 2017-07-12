@@ -44,8 +44,7 @@ class Environment:
             obj_pose = client(obj_name, 'world')
             return GetObjectStateResponse([obj_pose.pose.position.x,
                                            obj_pose.pose.position.y,
-                                           obj_pose.pose.position.z - 0.785])
-
+                                           obj_pose.pose.position.z - 0.945])
         except AttributeError:
             traceback.print_exc()
         except:
@@ -63,16 +62,16 @@ class Environment:
             req_z = req.model_pos_z
             if 'button' in obj_name:
                 self.add_object( arm_sim.Button(obj_name).spawn( 
-                    Point(x=req_x, y=req_y, z=req_z + 0.76) ) )
+                    Point(x=req_x, y=req_y, z=req_z + 0.945) ) )
             elif 'lever' in obj_name:
                 self.add_object( arm_sim.Lever(obj_name).spawn( 
-                    Point(x=req_x, y=req_y, z=req_z + 0.76), orientation=axis_to_quat([0,0,1], math.pi/2) ) )
+                    Point(x=req_x, y=req_y, z=req_z + 0.945), orientation=axis_to_quat([0,0,1], math.pi/2) ) )
             elif 'cube' in obj_name:
                 self.add_object( arm_sim.GazeboObject('cube1').spawn('DREAM_cube',
-                    Point(x=req_x, y=req_y, z=req_z + 0.76) ))
+                    Point(x=req_x, y=req_y, z=req_z + 0.945) ))
             elif 'cylinder' in obj_name:
                 self.add_object( arm_sim.GazeboObject('cylinder1').spawn('DREAM_cylinder',
-                    Point(x=req_x, y=req_y, z=req_z + 0.76) ))
+                    Point(x=req_x, y=req_y, z=req_z + 0.945) ))
             else:
                 print('reset_callback - Object name to spawn unknown:', obj_name)
                 return False
@@ -84,7 +83,7 @@ class Environment:
         
 
     def del_objects(self):
-        self.objects['light_table0'].turn_off()      
+        self.objects['light_table0'].turn_off()
         for obj in self.objects.keys(): 
             self.objects[obj].delete()        
 
@@ -94,9 +93,15 @@ class Environment:
     def init(self):
         ''' Create handles to (and spawn) simulated object in Gazebo'''
         self.add_object( arm_sim.Button('button1').spawn( 
-            Point(x=0.5, y=0.3, z=0.76) ) )
+            Point(x=rospy.get_param('obj_pos_vector/button1/x'), 
+                  y=rospy.get_param('obj_pos_vector/button1/y'), 
+                  z=rospy.get_param('obj_pos_vector/button1/z') + 0.945) ) )
+                  
         self.add_object( arm_sim.GazeboObject('cube1').spawn(
-            'DREAM_cube', Point(x=0.5, y=0.45, z=0.8) ))
+            'DREAM_cube', 
+            Point(x=rospy.get_param('obj_pos_vector/cube1/x'), 
+                  y=rospy.get_param('obj_pos_vector/cube1/y'), 
+                  z=rospy.get_param('obj_pos_vector/cube1/z') + 0.945) ))
 
         # the following objects are not spawn, cause already present in the world before this script is run
         self.add_object( arm_sim.Light('light_table0', color=[0,255,0]) )
@@ -118,8 +123,7 @@ class Environment:
     def rules(self):            
         objects = self.objects
         
-        print(objects['button1'].is_pressed(), objects['button1'].state_changed())
-
+#        print(objects['button1'].is_pressed(), objects['button1'].state_changed())
         if objects['button1'].is_pressed() and objects['button1'].state_changed():
             objects['light_table0'].turn_on() if not objects['light_table0'].is_on() else \
             objects['light_table0'].turn_off()
