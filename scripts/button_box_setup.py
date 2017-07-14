@@ -29,13 +29,15 @@ class Environment:
     def __init__(self):
         self.objects = {}
         self.rate = 100
-#        rospy.Subscriber('/environment/reset', Empty, self.reset_callback, queue_size = 1)
         self.reset_service = rospy.Service('/env/restart_environment', 
                                             RestartWorld, 
                                             self.reset_callback)
         self.get_object_pose_service = rospy.Service('/env/get_object_state', 
                                             GetObjectState, 
                                             self.get_object_pose_callback)
+
+    def get_light_state_callback(self, req):
+        return LightStateResponse(self.objects['light_table0'].is_on())
     
     def get_object_pose_callback(self, req):
         obj_name = req.object_name
@@ -53,7 +55,8 @@ class Environment:
     def reset_callback(self, req):
         if req.option == 'setup':
             self.del_objects()
-            self.init()
+            self.init(False)
+            time.sleep(0.5)
         elif req.option == 'object':
             obj_name = req.model_name
             self.objects[obj_name].delete()
@@ -79,6 +82,7 @@ class Environment:
             print('reset_callback - Option name unknown:', req.option)
             return False
         
+        time.sleep(0.5)
         return True
         
 
@@ -90,7 +94,7 @@ class Environment:
     def add_object(self, obj):
         if obj: self.objects[obj.gazebo_name] = obj
 
-    def init(self):
+    def init(self, create_service = True):
         ''' Create handles to (and spawn) simulated object in Gazebo'''
         self.add_object( arm_sim.Button('button1').spawn( 
             Point(x=rospy.get_param('obj_pos_vector/button1/x'), 
@@ -102,9 +106,19 @@ class Environment:
             Point(x=rospy.get_param('obj_pos_vector/cube1/x'), 
                   y=rospy.get_param('obj_pos_vector/cube1/y'), 
                   z=rospy.get_param('obj_pos_vector/cube1/z') + 0.945) ))
+                  
+        self.add_object( arm_sim.GazeboObject('goal_area1').spawn(
+            'DREAM_goal_area', 
+            Point(x=rospy.get_param('obj_pos_vector/goal_area1/x'), 
+                  y=rospy.get_param('obj_pos_vector/goal_area1/y'), 
+                  z=rospy.get_param('obj_pos_vector/goal_area1/z') + 0.945) ))                  
 
         # the following objects are not spawn, cause already present in the world before this script is run
         self.add_object( arm_sim.Light('light_table0', color=[0,255,0]) )
+        if create_service:
+            self.light_service = rospy.Service('/env/light_table0/lamp/visual/get_state', 
+                                       LightState, 
+                                       self.get_light_state_callback)
 
         # to let the publishers notify the master, so that the following commands are not discarded
         rospy.sleep(1)
@@ -122,8 +136,7 @@ class Environment:
 
     def rules(self):            
         objects = self.objects
-        
-#        print(objects['button1'].is_pressed(), objects['button1'].state_changed())
+
         if objects['button1'].is_pressed() and objects['button1'].state_changed():
             objects['light_table0'].turn_on() if not objects['light_table0'].is_on() else \
             objects['light_table0'].turn_off()

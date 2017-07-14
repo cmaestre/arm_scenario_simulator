@@ -2,7 +2,6 @@ import rospy
 from .gazeboObject import GazeboObject
 from std_msgs.msg import ColorRGBA
 from arm_scenario_simulator.msg import MaterialColor
-from arm_scenario_simulator.srv import *
 from .parameters import COLOR_TYPE
 
 class Light(GazeboObject):
@@ -12,15 +11,11 @@ class Light(GazeboObject):
 
     def __init__(self, name, color=None):
         GazeboObject.__init__(self, name)
-        self.publisher = rospy.Publisher('/'+name+'/lamp/visual/set_color', MaterialColor, queue_size=1)
-        self.light_service = rospy.Service('/'+name+'/lamp/visual/state', LightState, self.get_light_state_callback)
+        self.publisher = rospy.Publisher('/'+name+'/lamp/visual/set_color', MaterialColor, queue_size=1)        
         self.color = None
         self._on = False
         if color: self.set_color(color)
         self._send_color_cmd(Light.off_color) # This is of course useful only if the python object is being asociated with an already spawend model. Otherwise, it just does nothing
-
-    def get_light_state_callback(self, req):
-        return LightStateResponse(self._on)
 
     def spawn(self, shape, position, orientation = None, **extra):
         return GazeboObject.spawn(self, Light.types[shape], position,orientation, **extra)
