@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
   <model name="goal_area">
-	  <static>false</static>
+	  <static>true</static>
 	    <link name="link">
 	      <inertial>
-		<mass>0.01</mass>
+		<mass>100</mass>
 		<inertia> 
 		  <ixx>0.083</ixx>      
 		  <ixy>0.0</ixy>        
@@ -17,16 +17,16 @@
       <collision name="collision">
         <geometry>
           <cylinder>
-            <radius>0.01</radius>
-            <length>0.01</length>
+            <radius>0.02</radius>
+            <length>0.02</length>
           </cylinder>
         </geometry>
       </collision>
       <visual name="visual">
         <geometry>
           <cylinder>
-            <radius>0.05</radius>
-            <length>0.01</length>
+            <radius>0.02</radius>
+            <length>0.02</length>
           </cylinder>
         </geometry>
 		<material>
