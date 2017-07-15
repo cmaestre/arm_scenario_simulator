@@ -21,7 +21,7 @@
             <mesh>
                 <uri>model://DREAM_table/meshes/setup2.dae</uri>
             </mesh>
-        </geometry>
+        </geometry> 
         <surface>
           <friction>
             <ode>
@@ -29,7 +29,7 @@
               <mu2>100</mu2>
             </ode>
           </friction>
-        </surface>         
+        </surface>           
       </collision>
       <visual name="visual">
         <geometry>

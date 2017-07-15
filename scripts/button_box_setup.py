@@ -37,7 +37,7 @@ class Environment:
                                             self.get_object_pose_callback)
 
     def get_light_state_callback(self, req):
-        return LightStateResponse(self.objects['light_table0'].is_on())
+        return LightStateResponse(self.objects['light_table2'].is_on())
     
     def get_object_pose_callback(self, req):
         obj_name = req.object_name
@@ -87,7 +87,7 @@ class Environment:
         
 
     def del_objects(self):
-        self.objects['light_table0'].turn_off()
+        self.objects['light_table2'].turn_off()
         for obj in self.objects.keys(): 
             self.objects[obj].delete()        
 
@@ -111,19 +111,25 @@ class Environment:
             'DREAM_goal_area', 
             Point(x=rospy.get_param('obj_pos_vector/goal_area1/x'), 
                   y=rospy.get_param('obj_pos_vector/goal_area1/y'), 
-                  z=rospy.get_param('obj_pos_vector/goal_area1/z') + 0.945) ))                  
+                  z=rospy.get_param('obj_pos_vector/goal_area1/z') + 0.945) ))     
+                  
+        self.add_object( arm_sim.GazeboObject('goal_area2').spawn(
+            'DREAM_goal_area', 
+            Point(x=rospy.get_param('obj_pos_vector/goal_area2/x'), 
+                  y=rospy.get_param('obj_pos_vector/goal_area2/y'), 
+                  z=rospy.get_param('obj_pos_vector/goal_area2/z') + 0.945) ))                     
 
         # the following objects are not spawn, cause already present in the world before this script is run
-        self.add_object( arm_sim.Light('light_table0', color=[0,255,0]) )
+        self.add_object( arm_sim.Light('light_table2', color=[0,255,0]) )
         if create_service:
-            self.light_service = rospy.Service('/env/light_table0/lamp/visual/get_state', 
+            self.light_service = rospy.Service('/env/light_table2/lamp/visual/get_state', 
                                        LightState, 
                                        self.get_light_state_callback)
 
         # to let the publishers notify the master, so that the following commands are not discarded
         rospy.sleep(1)
         # Initialize objects attributes (color) and lights states
-        self.objects['light_table0'].set_light_state(on = False, force = True)
+        self.objects['light_table2'].set_light_state(on = False, force = True)
         self.objects['button1'].set_base_color(rgba = [0,255,0])
         self.objects['button1'].set_button_color(rgba = [0,255,0])
         
@@ -138,8 +144,8 @@ class Environment:
         objects = self.objects
 
         if objects['button1'].is_pressed() and objects['button1'].state_changed():
-            objects['light_table0'].turn_on() if not objects['light_table0'].is_on() else \
-            objects['light_table0'].turn_off()
+            objects['light_table2'].turn_on() if not objects['light_table2'].is_on() else \
+            objects['light_table2'].turn_off()
             time.sleep(5)
 
 def main():

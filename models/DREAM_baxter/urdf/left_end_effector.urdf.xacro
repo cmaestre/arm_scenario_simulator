@@ -4,10 +4,10 @@
   <xacro:rethink_electric_gripper side="left"
                                   l_finger="extended_narrow"
                                   l_finger_slot="2"
-                                  l_finger_tip="half_round_tip"
+                                  l_finger_tip="paddle_tip"
                                   l_finger_grasp="inner"
                                   r_finger="extended_narrow"
                                   r_finger_slot="2"
-                                  r_finger_tip="half_round_tip"
+                                  r_finger_tip="paddle_tip"
                                   r_finger_grasp="inner"/>
 </robot>
