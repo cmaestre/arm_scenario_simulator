@@ -49,7 +49,8 @@ add_service_files(
   FILES
   GetObjectState.srv
   RestartWorld.srv
-  LightState.srv
+  GetLightState.srv
+  SetLightState.srv
 )
 
 ## Generate messages in the 'msg' folder

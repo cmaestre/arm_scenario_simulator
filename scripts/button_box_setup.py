@@ -35,9 +35,6 @@ class Environment:
         self.get_object_pose_service = rospy.Service('/env/get_object_state', 
                                             GetObjectState, 
                                             self.get_object_pose_callback)
-
-    def get_light_state_callback(self, req):
-        return LightStateResponse(self.objects['light_table2'].is_on())
     
     def get_object_pose_callback(self, req):
         obj_name = req.object_name
@@ -121,10 +118,6 @@ class Environment:
 
         # the following objects are not spawn, cause already present in the world before this script is run
         self.add_object( arm_sim.Light('light_table2', color=[0,255,0]) )
-        if create_service:
-            self.light_service = rospy.Service('/env/light_table2/lamp/visual/get_state', 
-                                       LightState, 
-                                       self.get_light_state_callback)
 
         # to let the publishers notify the master, so that the following commands are not discarded
         rospy.sleep(1)
