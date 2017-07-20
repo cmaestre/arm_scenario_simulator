@@ -28,6 +28,7 @@ class Light(GazeboObject):
         return GetLightStateResponse(self._on)
         
     def set_light_state_callback(self, req):
+        rospy.set_param('env_changed', True)
         if req.light_state:
             self.turn_on(force = True)
         else:
