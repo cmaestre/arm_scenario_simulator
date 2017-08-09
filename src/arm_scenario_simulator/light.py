@@ -4,6 +4,9 @@ from std_msgs.msg import ColorRGBA
 from arm_scenario_simulator.msg import MaterialColor
 from arm_scenario_simulator.srv import *
 from .parameters import COLOR_TYPE
+from std_msgs.msg import Bool
+
+import threading
 
 class Light(GazeboObject):
     types = {'square':'DREAM_light_square', 'round':'DREAM_light_round'}
@@ -12,20 +15,32 @@ class Light(GazeboObject):
 
     def __init__(self, name, color=None):
         GazeboObject.__init__(self, name)
+        self.name = name
         self.publisher = rospy.Publisher('/'+name+'/lamp/visual/set_color', MaterialColor, queue_size=1)        
         self.color = None
         self._on = False
         if color: self.set_color(color)
         self._send_color_cmd(Light.off_color) # This is of course useful only if the python object is being asociated with an already spawend model. Otherwise, it just does nothing
-        self._get_light_service = rospy.Service('/env/'+name+'/lamp/visual/get_state', 
-                           GetLightState, 
-                           self.get_light_state_callback)
+        # self._get_light_service = rospy.Service('/env/'+name+'/lamp/visual/get_state', 
+        #                    GetLightState, 
+        #                    self.get_light_state_callback)
         self._set_light_service = rospy.Service('/env/'+name+'/lamp/visual/set_state', 
                            SetLightState, 
-                           self.set_light_state_callback)                           
+                           self.set_light_state_callback)     
+
+        thread = threading.Thread(target=self.publish_state, args=())
+        thread.daemon = True                            # Daemonize thread
+        thread.start()                                  # Start the execution                                                                          
                            
-    def get_light_state_callback(self, req):
-        return GetLightStateResponse(self._on)
+    # def get_light_state_callback(self, req):
+    #     return GetLightStateResponse(self._on)
+
+    def publish_state(self):
+        pub = rospy.Publisher('/env/'+self.name+'/lamp/visual/get_state', Bool, queue_size=1)
+        rate = rospy.Rate(50) # 50hz
+        while not rospy.is_shutdown():
+            pub.publish(self._on)
+            rate.sleep()         
         
     def set_light_state_callback(self, req):
         rospy.set_param('env_changed', True)

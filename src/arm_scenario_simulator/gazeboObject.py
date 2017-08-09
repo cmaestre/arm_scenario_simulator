@@ -8,7 +8,7 @@ from geometry_msgs.msg import Pose, Point, Quaternion, Twist
 from gazebo_msgs.srv import SpawnModel, DeleteModel, GetModelState, SetModelState
 from gazebo_msgs.msg import ModelState
 
-from arm_scenario_simulator.msg import MaterialColor
+from arm_scenario_simulator.msg import *
 from .parameters import COLOR_TYPE
 
 import xml.etree.ElementTree as ET
