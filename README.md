@@ -1,3 +1,5 @@
+# Adaptation of https://github.com/rotkreis/arm_scenario_simulator
+
 # Introduction
 
 This package was made to allow people make developmental robotic experiment simulations in Gazebo, with Baxter or any other robots having an arm (necessary to interact with the world).
